@@ -1,6 +1,27 @@
 import React from "react"
+import { useNavigate } from "react-router-dom"
+import { AuthData } from "../auth/AuthWrapper"
 
 const LeftSidebar = () => {
+  const navigate = useNavigate()
+  const { logout } = AuthData()
+
+  const navigateToHome = () => {
+    navigate("/dashboard")
+  }
+  const navigateToRooms = () => {
+    navigate("/rooms")
+  }
+  const navigateToDevices = () => {
+    navigate("/devices")
+  }
+  const navigateToStatictics = () => {
+    navigate("/statictics")
+  }
+  const handleLogout = () => {
+    logout()
+    navigate("/")
+  }
   return (
     <>
       <div className=" h-1/2 w-full">
@@ -12,7 +33,11 @@ const LeftSidebar = () => {
           ></img>
         </div>
         <div className="w-full flex flex-wrap justify-between">
-          <div className="px-10 py-5 inline-flex hover:bg-[#EBF5FF] items-center ">
+          {/* Dashboard */}
+          <div
+            className="px-10 py-5 inline-flex hover:bg-[#EBF5FF] items-center "
+            onClick={navigateToHome}
+          >
             <img
               src="/images/dashboard.png"
               alt="dashboard"
@@ -20,7 +45,11 @@ const LeftSidebar = () => {
             ></img>
             <strong className=" pl-3 text-xl">Dashboard</strong>
           </div>
-          <div className="px-10 py-5 inline-flex hover:bg-[#EBF5FF] items-center">
+          {/* Rooms */}
+          <div
+            className="px-10 py-5 inline-flex hover:bg-[#EBF5FF] items-center"
+            onClick={navigateToRooms}
+          >
             <img
               src="/images/door.png"
               alt="dashboard"
@@ -28,7 +57,11 @@ const LeftSidebar = () => {
             ></img>
             <strong className=" pl-3 text-xl">Rooms</strong>
           </div>
-          <div className="px-10 py-5 inline-flex hover:bg-[#EBF5FF] items-center">
+          {/* Devices */}
+          <div
+            className="px-10 py-5 inline-flex hover:bg-[#EBF5FF] items-center"
+            onClick={navigateToDevices}
+          >
             <img
               src="/images/device.png"
               alt="dashboard"
@@ -36,7 +69,11 @@ const LeftSidebar = () => {
             ></img>
             <strong className=" pl-3 text-xl">Devices</strong>
           </div>
-          <div className="px-10 py-5 inline-flex hover:bg-[#EBF5FF] items-center">
+          {/* Statistics */}
+          <div
+            className="px-10 py-5 inline-flex hover:bg-[#EBF5FF] items-center"
+            onClick={navigateToStatictics}
+          >
             <img
               src="/images/statistic.png"
               alt="dashboard"
@@ -46,8 +83,12 @@ const LeftSidebar = () => {
           </div>
         </div>
       </div>
+      {/* Logout */}
       <div className="flex justify-end items-center">
-        <div className="px-10 py-3 inline-flex hover:bg-[#EBF5FF] items-center">
+        <div
+          className="px-10 py-3 inline-flex hover:bg-[#EBF5FF] items-center"
+          onClick={handleLogout}
+        >
           <img
             src="/images/Logout.png"
             alt="dashboard"

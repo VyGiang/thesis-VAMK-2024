@@ -1,9 +1,9 @@
 import React from "react"
 import MobileHeader from "../generes/MobileHeader"
 import LeftSidebar from "../generes/LeftSidebar"
-import DevicesControl from "../generes/DevicesControl"
+import LivingControl from "../generes/LivingControl"
 
-const Devices = () => {
+const LivingRoom = () => {
   return (
     <div className="bg-blue-200 font-merri">
       <div>
@@ -15,11 +15,11 @@ const Devices = () => {
           <LeftSidebar />
         </div>
         <div className="md:col-span-12 sm:col-span-12 lg:col-span-10 rounded-xl">
-          <DevicesControl />
+          <LivingControl />
         </div>
       </div>
     </div>
   )
 }
 
-export default Devices
+export default LivingRoom

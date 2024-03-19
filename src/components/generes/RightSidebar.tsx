@@ -1,5 +1,6 @@
 import { BsThreeDots } from "react-icons/bs"
 import React, { useState, useEffect } from "react"
+import OnOffButton from "./OnOffButton"
 
 const RightSidebar = () => {
   return (
@@ -34,7 +35,8 @@ const RightSidebar = () => {
           </div>
           {/* <!-- Tivi--> */}
           <div className="sm:col-span-2 md:col-span-1 lg:col-span-1">
-            <div className="flex flex-col items-center p-3 rounded-2xl bg-pink-100 h-28  justify-evenly  ">
+            <div className="flex flex-col items-center p-3 rounded-2xl bg-pink-100 h-32  justify-evenly  ">
+              <OnOffButton />
               <img
                 src="/images/Tivi.png"
                 className="lg:w-5/12 sm:w-3/12 md:w-3/12 object-contain"
@@ -44,7 +46,8 @@ const RightSidebar = () => {
           </div>
           {/* <!--Router--> */}
           <div className="sm:col-span-2 md:col-span-1 lg:col-span-1">
-            <div className="flex flex-col items-center p-3 rounded-2xl bg-green-100 h-28 justify-evenly ">
+            <div className="flex flex-col items-center p-3 rounded-2xl bg-green-100 h-32 justify-evenly ">
+              <OnOffButton />
               <img
                 src="/images/Router.png"
                 className="lg:w-5/12 sm:w-3/12 md:w-3/12 object-contain"
@@ -54,7 +57,8 @@ const RightSidebar = () => {
           </div>
           {/* <!--Bulb--> */}
           <div className=" sm:col-span-2 md:col-span-1 lg:col-span-1">
-            <div className="flex flex-col items-center p-3 rounded-2xl bg-yellow-100  h-28 justify-evenly ">
+            <div className="flex flex-col items-center p-3 rounded-2xl bg-yellow-100 h-32 justify-evenly ">
+              <OnOffButton />
               <img
                 src="/images/Bulb.png"
                 className="lg:w-5/12 sm:w-3/12 md:w-3/12 object-contain"
@@ -64,7 +68,8 @@ const RightSidebar = () => {
           </div>
           {/* <!--Stove--> */}
           <div className=" sm:col-span-2 md:col-span-1 lg:col-span-1">
-            <div className="flex flex-col items-center p-3 rounded-2xl bg-blue-100 h-28 justify-evenly ">
+            <div className="flex flex-col items-center p-3 rounded-2xl bg-blue-100 h-32 justify-evenly ">
+              <OnOffButton />
               <img
                 src="/images/Stove.png"
                 className="lg:w-5/12 sm:w-3/12 md:w-3/12 object-contain"

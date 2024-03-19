@@ -25,7 +25,7 @@ const SignIn = () => {
       navigate("")
     } else {
       login(email, password)
-      navigate("/rooms")
+      navigate("/dashboard")
     }
   }
 

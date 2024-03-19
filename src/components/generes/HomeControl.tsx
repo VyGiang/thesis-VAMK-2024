@@ -2,8 +2,23 @@ import React from "react"
 import Navbar from "./Navbar"
 import Statictics from "./StaticticsControl"
 import { BsThreeDots } from "react-icons/bs"
+import { useNavigate } from "react-router-dom"
 
 const HomeControl = () => {
+  const navigate = useNavigate()
+
+  const navigateToLivingRoom = () => {
+    navigate("/livingRoom")
+  }
+  const navigateToBedRoom = () => {
+    navigate("/bedRoom")
+  }
+  const navigateToBathRoom = () => {
+    navigate("/bathRoom")
+  }
+  const navigateToKitchen = () => {
+    navigate("/kitchen")
+  }
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-5">
@@ -18,7 +33,10 @@ const HomeControl = () => {
         {/* main*/}
         <div className=" bg-[#F0F0F0] sm:col-span-1 md:col-span-1 lg:col-span-2 rounded-xl  grid grid-cols-4 gap-5 p-5">
           {/* Living Room */}
-          <div className="bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1">
+          <div
+            className="bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1"
+            onClick={navigateToLivingRoom}
+          >
             <div className=" p-3">
               <div className="flex flex-wrap justify-around items-center">
                 <strong className=" text-sm">Living Room</strong>
@@ -42,7 +60,10 @@ const HomeControl = () => {
             </div>
           </div>
           {/* Bedroom */}
-          <div className="bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1">
+          <div
+            className="bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1"
+            onClick={navigateToBedRoom}
+          >
             <div className=" p-3">
               <div className="flex flex-wrap justify-around items-center">
                 <strong className=" text-sm">Bedroom</strong>
@@ -66,7 +87,10 @@ const HomeControl = () => {
             </div>
           </div>
           {/* Bathroom */}
-          <div className="bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1">
+          <div
+            className="bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1"
+            onClick={navigateToBathRoom}
+          >
             <div className=" p-3">
               <div className="flex flex-wrap justify-around items-center">
                 <strong className=" text-sm">Bathroom</strong>
@@ -90,7 +114,10 @@ const HomeControl = () => {
             </div>
           </div>
           {/* Kitchen */}
-          <div className="bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1">
+          <div
+            className="bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1"
+            onClick={navigateToKitchen}
+          >
             <div className=" p-3">
               <div className="flex flex-wrap justify-around items-center">
                 <strong className=" text-sm">Kitchen</strong>

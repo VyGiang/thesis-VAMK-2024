@@ -2,7 +2,11 @@ import Rooms from "@/components/pages/Rooms"
 import Devices from "@/components/pages/Devices"
 import LoginPage from "@/components/pages/LoginPage"
 import DashBoard from "@/components/pages/DashBoard"
-import Room from "@/components/pages/Room"
+import Statictics from "@/components/pages/Statictics"
+import LivingRoom from "@/components/pages/LivingRoom"
+import BathRoom from "@/components/pages/BathRoom"
+import BedRoom from "@/components/pages/BedRoom"
+import Kitchen from "@/components/pages/Kitchen"
 
 export const nav = [
   {
@@ -30,9 +34,33 @@ export const nav = [
     isPrivate: false,
   },
   {
-    path: "/room",
-    name: "room",
-    element: <Room />,
-    isPrivate: false,
+    path: "/livingRoom",
+    name: "livingRoom",
+    element: <LivingRoom />,
+    isPrivate: true,
+  },
+  {
+    path: "/bathRoom",
+    name: "bathRoom",
+    element: <BathRoom />,
+    isPrivate: true,
+  },
+  {
+    path: "/bedRoom",
+    name: "bedRoom",
+    element: <BedRoom />,
+    isPrivate: true,
+  },
+  {
+    path: "/kitchen",
+    name: "kitchen",
+    element: <Kitchen />,
+    isPrivate: true,
+  },
+  {
+    path: "/statictics",
+    name: "Statictics",
+    element: <Statictics />,
+    isPrivate: true,
   },
 ]
