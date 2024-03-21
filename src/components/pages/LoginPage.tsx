@@ -1,8 +1,7 @@
-import BackgroundImage from "@/assets/background_main_page.png";
-import { Button } from "../ui/button";
-import SignIn from "../auth/SignIn";
-import AuthDetails from "../auth/AuthDetails";
-import { RenderRoutes } from "@/lib/RenderNavigation";
+import BackgroundImage from "@/assets/background_main_page.png"
+import { Button } from "../ui/button"
+import SignIn from "../auth/SignIn"
+import AuthDetails from "../auth/AuthDetails"
 
 const LoginPage = () => {
   return (
@@ -16,18 +15,17 @@ const LoginPage = () => {
       }}
     >
       <div className="Login flex flex-col items-center justify-center content-center">
-        <p className="text-5xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white font-inter-bold mb-4 md:mb-6 lg:mb-8 font-abril">
+        <p className=" md:text-5xl lg:text-6xl sm:text-5xl font-bold font-merri text-white  mb-4 md:mb-6 lg:mb-8 ">
           Login
         </p>
         <SignIn />
         <AuthDetails />
-
         <Button className="w-48 md:w-56 lg:w-60 m-3 p-2 bg-[#76A2CB] rounded-3xl border border-[#76A2CB] font-bold s text-[19px] text-center">
           Forget password ?
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage

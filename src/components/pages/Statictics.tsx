@@ -1,4 +1,3 @@
-import React from "react"
 import MobileHeader from "../generes/MobileHeader"
 import LeftSidebar from "../generes/LeftSidebar"
 import StaticticsControl from "../generes/StaticticsControl"

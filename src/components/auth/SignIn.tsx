@@ -53,13 +53,21 @@ const SignIn = () => {
         {" "}
         {/* Updated to center the content */}
         <Button
-          className="w-64 md:w-64 lg:w-72 m-3 p-1 rounded-3xl font-bold text-[#033047] text-[29px] text-center
-     bg-blue-300 border border-blue-300"
+          className="sm:w-64 md:w-64 lg:w-72 m-3 p-1 rounded-3xl font-bold text-[#033047] text-[29px] text-center
+     bg-blue-400 border border-blue-300"
           type="submit"
           onClick={handleSubmit}
         >
           Login
         </Button>
+        {/* <Button
+          className="sm:w-48 md:w-48 lg:w-64 m-3 p-1 rounded-3xl font-bold text-[#033047] text-[29px] text-center
+     bg-gray-400 border border-gray-400"
+          type="submit"
+          onClick={handleSubmit}
+        >
+          Register
+        </Button> */}
       </div>
     </div>
   )
