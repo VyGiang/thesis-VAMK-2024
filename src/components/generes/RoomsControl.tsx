@@ -6,16 +6,16 @@ const RoomsControl = () => {
   const navigate = useNavigate()
 
   const navigateToLivingRoom = () => {
-    navigate("/livingRoom")
+    navigate("/rooms/livingRoom")
   }
   const navigateToBedRoom = () => {
-    navigate("/bedRoom")
+    navigate("/rooms/bedRoom")
   }
   const navigateToBathRoom = () => {
-    navigate("/bathRoom")
+    navigate("/rooms/bathRoom")
   }
   const navigateToKitchen = () => {
-    navigate("/kitchen")
+    navigate("/rooms/kitchen")
   }
 
   return (

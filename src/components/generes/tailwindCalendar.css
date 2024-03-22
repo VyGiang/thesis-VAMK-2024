@@ -1,0 +1,38 @@
+/* tailwindCalendar.css */
+.calendar-container .react-calendar {
+  @apply border-0 shadow-none rounded-none;
+  width: 100%; /* Ensure the calendar takes full width */
+}
+
+.calendar-container .react-calendar__navigation button {
+  @apply text-gray-700 font-semibold;
+}
+
+.calendar-container .react-calendar__month-view__weekdays,
+.calendar-container .react-calendar__month-view__days {
+  @apply text-xs sm:text-sm;
+}
+
+.calendar-container .react-calendar__tile {
+  @apply flex justify-center items-center text-center m-0;
+  height: 3em; /* Fixed height for each calendar tile */
+}
+
+.calendar-container .react-calendar__tile--active {
+  @apply bg-blue-500 text-white;
+}
+
+.calendar-container .react-calendar__tile--active:enabled:hover,
+.calendar-container .react-calendar__tile--active:enabled:focus {
+  @apply bg-blue-700;
+}
+
+.calendar-container .react-calendar__tile--now {
+  @apply bg-blue-300;
+}
+
+.calendar-container .react-calendar__tile--hasActive {
+  @apply bg-blue-300;
+}
+
+/* Add additional styles as necessary */
