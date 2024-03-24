@@ -1,6 +1,7 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
 import { AuthData } from "../auth/AuthWrapper"
+import { FaClipboardList } from "react-icons/fa"
 
 const LeftSidebar = () => {
   const navigate = useNavigate()
@@ -17,6 +18,9 @@ const LeftSidebar = () => {
   }
   const navigateToStatictics = () => {
     navigate("/statictics")
+  }
+  const navigateToTodoPage = () => {
+    navigate("/TodoPage")
   }
   const handleLogout = () => {
     logout()
@@ -81,6 +85,14 @@ const LeftSidebar = () => {
             ></img>
             <strong className="pl-3 text-xl">Statistics</strong>
           </div>
+          {/* TodoList */}
+          <div
+            className="px-10 py-5 inline-flex hover:bg-[#EBF5FF] items-center"
+            onClick={navigateToTodoPage}
+          >
+            <FaClipboardList size={38} />
+            <strong className="pl-2 text-xl pr-2">Todo List</strong>
+          </div>
         </div>
       </div>
       {/* Logout */}
@@ -94,7 +106,9 @@ const LeftSidebar = () => {
             alt="dashboard"
             className="w-6/12 object-contain"
           ></img>
-          <span className="pl-2 text-2xl text-black font-bold">Logout</span>
+          <span className="pl-2 pr-2 text-2xl text-black font-bold">
+            Logout
+          </span>
         </div>
       </div>
     </>

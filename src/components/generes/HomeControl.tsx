@@ -3,21 +3,23 @@ import Navbar from "./Navbar"
 import Statictics from "./StaticticsControl"
 import { BsThreeDots } from "react-icons/bs"
 import { useNavigate } from "react-router-dom"
+import WeatherComponent from "./WeatherComponent"
+import TodoList from "./TodoList"
 
 const HomeControl = () => {
   const navigate = useNavigate()
 
   const navigateToLivingRoom = () => {
-    navigate("/livingRoom")
+    navigate("/rooms/livingRoom")
   }
   const navigateToBedRoom = () => {
-    navigate("/bedRoom")
+    navigate("/rooms/bedRoom")
   }
   const navigateToBathRoom = () => {
-    navigate("/bathRoom")
+    navigate("/rooms/bathRoom")
   }
   const navigateToKitchen = () => {
-    navigate("/kitchen")
+    navigate("/rooms/kitchen")
   }
   return (
     <>
@@ -142,47 +144,12 @@ const HomeControl = () => {
           </div>
           {/* phan phia duoi */}
           <div className=" col-span-4 grid grid-cols-12 gap-5">
-            {/* 2 cuc ben trai*/}
-            <div className=" col-span-5 sm:col-span-12 md:col-span-12 lg:col-span-5 grid grid-cols-1 gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1">
-              {/* Indoor Temperature */}
-              <div className=" bg-white rounded-xl px-5 py-5 h-auto flex items-center">
-                <div className="flex flex-wrap justify-between items-center">
-                  <div className=" flex h-20 w-20 shrink-0 grow-0 items-center justify-center rounded-full bg-white shadow-md shadow-slate-500">
-                    <img
-                      src="/images/temp.png"
-                      alt="temp"
-                      className=" w-5/12"
-                    ></img>
-                  </div>
-                  <div className=" pl-5">
-                    <p className=" text-sm font-semibold">Indoor Temperature</p>
-                    <h3 className=" text-4xl">
-                      25 <span className=" text-xl">&#8451;</span>
-                    </h3>
-                  </div>
-                </div>
-              </div>
-              {/* Humidity */}
-              <div className=" bg-white rounded-xl px-5 py-5 h-auto flex items-center">
-                <div className="flex flex-wrap justify-between items-center">
-                  <div className=" flex h-20 w-20 shrink-0 grow-0 items-center justify-center rounded-full bg-white shadow-md shadow-slate-500">
-                    <img
-                      src="/images/percent.png"
-                      alt="temp"
-                      className=" w-5/12"
-                    ></img>
-                  </div>
-                  <div className=" pl-5">
-                    <p className=" text-sm font-semibold">Humidity </p>
-                    <h3 className=" text-4xl">
-                      30 <span className=" text-xl">%</span>
-                    </h3>
-                  </div>
-                </div>
-              </div>
+            {/*  temperature and humidity */}
+            <WeatherComponent city="Vaasa,FI" />
+            {/* Todo list*/}
+            <div className=" col-span-7 h-auto sm:col-span-12 md:col-span-12 lg:col-span-7 bg-white rounded-xl">
+              <TodoList />
             </div>
-            {/* 1 cuc ben phai*/}
-            <div className=" col-span-7 h-auto sm:col-span-12 md:col-span-12 lg:col-span-7 bg-white rounded-xl"></div>
           </div>
         </div>
 

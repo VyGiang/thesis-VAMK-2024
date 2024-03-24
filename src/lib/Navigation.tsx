@@ -7,6 +7,7 @@ import LivingRoom from "@/components/pages/LivingRoom"
 import BathRoom from "@/components/pages/BathRoom"
 import BedRoom from "@/components/pages/BedRoom"
 import Kitchen from "@/components/pages/Kitchen"
+import TodoPage from "@/components/pages/TodoPage"
 
 export const nav = [
   {
@@ -59,8 +60,14 @@ export const nav = [
   },
   {
     path: "/statictics",
-    name: "Statictics",
+    name: "statictics",
     element: <Statictics />,
+    isPrivate: true,
+  },
+  {
+    path: "/todoPage",
+    name: "todoPage",
+    element: <TodoPage />,
     isPrivate: true,
   },
 ]

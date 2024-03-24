@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import MyCalendar from "./MyCalendar"
 
 export interface ISmartHomeDevice {
   id: string

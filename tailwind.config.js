@@ -10,6 +10,7 @@ module.exports = {
     "./src/**/**/*.{ts,tsx}",
     "./node_modules/flowbite/**/*.js",
   ],
+  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   prefix: "",
   theme: {
     container: {
@@ -23,6 +24,12 @@ module.exports = {
       xl: "1440px",
     },
     extend: {
+      fontSize: {
+        "icon-base": "1.5rem", // Default icon size
+        "icon-lg": "1.75rem", // Large icon size
+        "icon-md": "1.75rem", // Medium icon size
+        "icon-sm": "1rem", // Small icon size
+      },
       height: {
         "3/4": "75%",
       },
