@@ -6,7 +6,7 @@ interface Props {
   setIsOpen: (isOpen: boolean) => void
 }
 
-const FormWithFloatingLabels: React.FC<Props> = ({ isOpen, setIsOpen }) => {
+const AddDeviceForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
   // Apply the overlay style conditionally based on isOpen
   const overlayStyle = isOpen
     ? {
@@ -219,4 +219,4 @@ const FormWithFloatingLabels: React.FC<Props> = ({ isOpen, setIsOpen }) => {
   )
 }
 
-export default FormWithFloatingLabels
+export default AddDeviceForm
