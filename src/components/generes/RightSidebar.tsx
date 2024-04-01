@@ -22,8 +22,8 @@ const RightSidebar = () => {
           </label>
           <h2 className="text-lg font-semibold">Welcome Vivian!</h2>
         </div>
-        {/* <!-- Favorite Devices Section --> */}
-        <div className=" bg-white rounded-2xl  grid grid-cols-2 gap-5 p-5">
+        {/* <!-- Calendar Section --> */}
+        <div className=" transform duration-500 hover:scale-105  bg-white rounded-2xl  grid grid-cols-2 gap-5 p-5 cursor-pointer">
           <div className="col-span-2 grid grid-cols-2 gap-5 items-center">
             <strong className=" text-sm ">Calendar</strong>
             <div className="flex justify-end">

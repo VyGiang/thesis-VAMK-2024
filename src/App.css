@@ -40,3 +40,12 @@
 .read-the-docs {
   color: #888;
 }
+/* Custom Checkbox Styles */
+.checkbox-white .MuiSvgIcon-root {
+  /* Targets the SVG icon inside the Checkbox */
+  color: white;
+}
+.checkbox-white.Mui-checked .MuiSvgIcon-root {
+  /* Targets the SVG icon when Checkbox is checked */
+  color: white;
+}

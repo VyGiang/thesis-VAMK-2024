@@ -1,13 +1,16 @@
-import React from "react"
 import Navbar from "./Navbar"
 import Statictics from "./StaticticsControl"
 import { BsThreeDots } from "react-icons/bs"
 import { useNavigate } from "react-router-dom"
 import WeatherComponent from "./WeatherComponent"
 import TodoList from "./TodoList"
+import CurrentTime from "./CurrentTime"
+import CustomPopup from "./CustomPopup"
+import { useState } from "react"
 
 const HomeControl = () => {
   const navigate = useNavigate()
+  const [isPopupOpen, setIsPopupOpen] = useState(false)
 
   const navigateToLivingRoom = () => {
     navigate("/rooms/livingRoom")
@@ -21,22 +24,27 @@ const HomeControl = () => {
   const navigateToKitchen = () => {
     navigate("/rooms/kitchen")
   }
+
+  // Handler for closing the popup
+  const popupCloseHandler = () => {
+    setIsPopupOpen(false)
+  }
+  const handleOpenPopup = () => setIsPopupOpen(true)
+
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Navbar */}
         <Navbar />
         <div className="flex items-center justify-end">
-          <p className="text-right text-sm font-bold">
-            Monday, 11 December 2023
-          </p>
+          <CurrentTime />
         </div>
 
         {/* main*/}
         <div className=" bg-[#F0F0F0] sm:col-span-1 md:col-span-1 lg:col-span-2 rounded-xl  grid grid-cols-4 gap-5 p-5">
           {/* Living Room */}
           <div
-            className="bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1"
+            className="transform bg-white h-32 transition duration-500 hover:scale-105 hover:bg-blue-100 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1"
             onClick={navigateToLivingRoom}
           >
             <div className=" p-3">
@@ -63,7 +71,7 @@ const HomeControl = () => {
           </div>
           {/* Bedroom */}
           <div
-            className="bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1"
+            className="transform duration-500 hover:scale-105 hover:bg-blue-100 bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1"
             onClick={navigateToBedRoom}
           >
             <div className=" p-3">
@@ -90,7 +98,7 @@ const HomeControl = () => {
           </div>
           {/* Bathroom */}
           <div
-            className="bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1"
+            className=" transform duration-500 hover:scale-105 hover:bg-blue-100 bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1"
             onClick={navigateToBathRoom}
           >
             <div className=" p-3">
@@ -117,7 +125,7 @@ const HomeControl = () => {
           </div>
           {/* Kitchen */}
           <div
-            className="bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1"
+            className="transform duration-500 hover:scale-105 hover:bg-blue-100  bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1"
             onClick={navigateToKitchen}
           >
             <div className=" p-3">
@@ -147,14 +155,23 @@ const HomeControl = () => {
             {/*  temperature and humidity */}
             <WeatherComponent city="Vaasa,FI" />
             {/* Todo list*/}
-            <div className=" col-span-7 h-auto sm:col-span-12 md:col-span-12 lg:col-span-7 bg-white rounded-xl">
-              <TodoList />
+            <div className="  transform duration-500 hover:scale-105 hover:bg-blue-100 col-span-7 h-auto sm:col-span-12 md:col-span-12 lg:col-span-7 bg-white rounded-xl">
+              <TodoList onOpenPopup={handleOpenPopup} />
             </div>
           </div>
         </div>
 
         {/* Statictics*/}
         <Statictics />
+
+        {/* Custom Popup for TodoList */}
+        <CustomPopup
+          onClose={popupCloseHandler}
+          show={isPopupOpen}
+          // title="My Todo List"
+        >
+          <TodoList />
+        </CustomPopup>
       </div>
     </>
   )

@@ -15,7 +15,7 @@ const Navbar = () => {
           <input
             type="search"
             id="default-search"
-            className="block w-full p-4 ps-10 text-sm text-gray-900 border rounded-3xl  bg-white  dark:text-white"
+            className="block w-full p-4 ps-10 text-sm text-gray-900 border rounded-3xl  bg-white  dark:text-white transform duration-500 hover:scale-105"
             placeholder="Search"
             required
           />

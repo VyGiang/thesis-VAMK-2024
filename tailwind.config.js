@@ -3,8 +3,8 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
     "./src/**/**/*.{ts,tsx}",
@@ -24,6 +24,18 @@ module.exports = {
       xl: "1440px",
     },
     extend: {
+      //for gradient hover effect
+      backgroundSize: {
+        "size-200": "200% 200%",
+      },
+      animation: {
+        shine: "shine 1s",
+      },
+      keyframes: {
+        shine: {
+          "100%": { left: "125%" },
+        },
+      },
       fontSize: {
         "icon-base": "1.5rem", // Default icon size
         "icon-lg": "1.75rem", // Large icon size

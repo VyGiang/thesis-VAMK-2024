@@ -1,7 +1,8 @@
 /* tailwindCalendar.css */
 .calendar-container .react-calendar {
   @apply border-0 shadow-none rounded-none;
-  width: 100%; /* Ensure the calendar takes full width */
+  width: 100%;
+  @apply z-0; /* Ensure the calendar takes full width */
 }
 
 .calendar-container .react-calendar__navigation button {

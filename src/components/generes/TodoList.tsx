@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Task } from "../models/Task"
 import TodoItem from "./TodoItem"
-import Navbar from "./Navbar"
+import { FaEdit } from "react-icons/fa"
 
 function saveTasks(tasks: Task[]) {
   localStorage.setItem("tasks", JSON.stringify(tasks))
@@ -12,8 +12,7 @@ function loadTasks(): Task[] {
   if (taskJson == null) return []
   return JSON.parse(taskJson)
 }
-
-const TodoList: React.FC = () => {
+const TodoList: React.FC<{ onOpenPopup: () => void }> = ({ onOpenPopup }) => {
   const [tasks, setTasks] = useState<Task[]>(loadTasks()) // Initial state is loaded from Local Storage
   const [newTaskText, setNewTaskText] = useState("")
 
@@ -65,17 +64,20 @@ const TodoList: React.FC = () => {
   return (
     <div>
       <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* Navbar */}
-        <Navbar />
-        <div className="flex items-center justify-end">
-          <p className="text-right text-sm font-bold">
-            Monday, 11 December 2023
-          </p>
-        </div>
-
         {/* main*/}
-        <div className="  bg-[#F0F0F0] sm:col-span-1 md:col-span-1 lg:col-span-2 rounded-xl p-5">
-          <h1 className="text-4xl font-bold mb-3 text-center">TODO LIST</h1>
+        <div className="  bg-white sm:col-span-1 md:col-span-1 lg:col-span-2 rounded-xl p-5">
+          <div className="flex items-center justify-center space-x-4">
+            <h1 className="text-4xl font-bold text-center flex items-center">
+              TODO LIST
+            </h1>
+            <button
+              onClick={onOpenPopup}
+              className="text-gray-600 hover:text-gray-900 flex items-center"
+            >
+              <FaEdit className="w-6 h-6 md:w-8 md:h-8 lg:w-8 lg:h-8" />
+            </button>
+          </div>
+
           <div className="bg-blue-100 w-full max-w-4xl mx-auto rounded-lg shadow-md p-6">
             <div className="flex justify-between mb-6">
               <div className=" w-full max-w-3xl mx-auto">

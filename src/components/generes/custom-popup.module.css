@@ -1,0 +1,67 @@
+.overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 500ms ease-in-out;
+  z-index: 40; /* Adjust if needed to be above other elements */
+}
+
+.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popup {
+  position: relative;
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  width: 30%;
+  transition: all 0.3s ease-in-out;
+  z-index: 50;
+}
+
+/* Rest of the styles */
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  cursor: pointer;
+  color: #000;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+@media screen and (max-width: 700px) {
+  .popup {
+    width: 70%;
+  }
+}

@@ -38,9 +38,9 @@ const WeatherComponent: React.FC<WeatherComponentProps> = ({ city }) => {
   return (
     <div className=" col-span-5 sm:col-span-12 md:col-span-12 lg:col-span-5 grid grid-cols-1 gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1">
       {/* Indoor Temperature */}
-      <div className=" bg-white rounded-xl px-5 py-5 h-auto flex items-center">
+      <div className=" transform duration-500 hover:scale-105 bg-white  hover:bg-blue-100 rounded-xl px-5 py-5 h-auto flex items-center">
         <div className="flex flex-wrap justify-between items-center">
-          <div className=" flex h-20 w-20 shrink-0 grow-0 items-center justify-center rounded-full bg-white shadow-md shadow-slate-500">
+          <div className=" flex h-20 w-20 shrink-0 grow-0 items-center justify-center rounded-full   bg-white shadow-md shadow-slate-500">
             <img src="/images/temp.png" alt="temp" className=" w-5/12"></img>
           </div>
           <div className=" pl-5">
@@ -52,7 +52,7 @@ const WeatherComponent: React.FC<WeatherComponentProps> = ({ city }) => {
         </div>
       </div>
       {/* Humidity */}
-      <div className=" bg-white rounded-xl px-5 py-5 h-auto flex items-center">
+      <div className=" transform duration-500 hover:scale-105 hover:bg-blue-100 bg-white rounded-xl px-5 py-5 h-auto flex items-center">
         <div className="flex flex-wrap justify-between items-center">
           <div className=" flex h-20 w-20 shrink-0 grow-0 items-center justify-center rounded-full bg-white shadow-md shadow-slate-500">
             <img src="/images/percent.png" alt="temp" className=" w-5/12"></img>
