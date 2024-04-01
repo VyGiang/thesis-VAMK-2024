@@ -3,7 +3,7 @@ import Navbar from "./Navbar"
 import OnOffButton from "./OnOffButton"
 import { FaPlus } from "react-icons/fa"
 import { SiHomeassistant } from "react-icons/si"
-import FormWithFloatingLabels from "./FloatingLabelForm"
+import AddDeviceForm from "./AddDeviceForm"
 
 const DevicesControl = () => {
   const [isFormOpen, setIsFormOpen] = useState(false)
@@ -79,7 +79,7 @@ const DevicesControl = () => {
           </div>
         </div>
       </div>
-      <FormWithFloatingLabels isOpen={isFormOpen} setIsOpen={setIsFormOpen} />
+      <AddDeviceForm isOpen={isFormOpen} setIsOpen={setIsFormOpen} />
     </div>
   )
 }
