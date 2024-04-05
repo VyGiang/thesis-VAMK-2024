@@ -1,0 +1,92 @@
+@startuml
+' Define a style for tables
+skinparam class {
+    BackgroundColor Orchid
+    ArrowColor SeaGreen
+}
+
+' Define classes for each collection/entity
+class UserLogin {
+    - Name: String
+    - ID: String (Firebase Auth UID)
+    - Timestamp: DateTime
+    - Avatar: String
+}
+
+class HouseAttribute {
+    - Address: String
+    - ID: String (Unique Identifier)
+    - Number of members: Integer
+    - Number of rooms: Integer
+}
+
+class Member {
+    - Name: String
+    - Date of birth: DateTime
+    - Gender: String
+    - Hobbies: String
+    - Favorite Food: String
+    - Role in Family: String
+    - Avatar: String
+}
+
+class Room {
+    - Name: String
+    - Room ID: String (Unique Identifier)
+    - Owner?: String (Optional)
+    - isPrivate?: Boolean (Optional)
+}
+
+class Device {
+    - Name: String
+    - ID_device: String
+    - Room ID: String
+    - Manufacturer: String
+    - Money: Number
+    - pre_timestamp: DateTime
+    - after_timestamp: DateTime
+    - power (kWh): Number
+}
+
+' Define classes for Realtime Database nodes
+class DeviceState {
+    - State: String or Boolean
+    - LastChanged: DateTime
+}
+
+class PowerConsumption {
+    - Timestamps: DateTime[]
+    - kWh: Number[]
+    - DeviceID: String
+}
+
+' Define relationships
+UserLogin --> HouseAttribute : "Linked through ID"
+HouseAttribute --> Member : "Contains"
+HouseAttribute --> Room : "Contains"
+Room --> Device : "Contains"
+Device --> DeviceState : "Syncs with Realtime Database"
+Device --> PowerConsumption : "Logs to Realtime Database"
+
+' Add notes
+note right of UserLogin
+    "User login information and profile, managed by Firebase Authentication."
+end note
+
+note right of HouseAttribute
+    "House attributes such as address and number of rooms, linked to a user."
+end note
+
+note right of Device
+    "Information about devices in rooms, including power usage and timestamps for tracking."
+end note
+
+note right of DeviceState
+    "Realtime state of devices, updated in Realtime Database."
+end note
+
+note right of PowerConsumption
+    "Power consumption data for devices, used for generating charts and analytics."
+end note
+
+@enduml

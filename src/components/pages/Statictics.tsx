@@ -1,6 +1,6 @@
-import MobileHeader from "../generes/MobileHeader"
-import LeftSidebar from "../generes/LeftSidebar"
-import StaticticsControl from "../generes/StaticticsControl"
+import MobileHeader from "../generes/MobileHeader";
+import LeftSidebar from "../generes/LeftSidebar";
+import StaticticsControl from "../generes/StaticticsControl";
 
 const Statictics = () => {
   return (
@@ -18,7 +18,7 @@ const Statictics = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Statictics
+export default Statictics;

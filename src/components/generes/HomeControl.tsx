@@ -1,35 +1,35 @@
-import Navbar from "./Navbar"
-import Statictics from "./StaticticsControl"
-import { BsThreeDots } from "react-icons/bs"
-import { useNavigate } from "react-router-dom"
-import WeatherComponent from "./WeatherComponent"
-import TodoList from "./TodoList"
-import CurrentTime from "./CurrentTime"
-import CustomPopup from "./CustomPopup"
-import { useState } from "react"
+import Navbar from "./Navbar";
+import Statictics from "./StaticticsControl";
+import { BsThreeDots } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
+import WeatherComponent from "./WeatherComponent";
+import TodoList from "./TodoList";
+import CurrentTime from "./CurrentTime";
+import CustomPopup from "./CustomPopup";
+import { useState } from "react";
 
 const HomeControl = () => {
-  const navigate = useNavigate()
-  const [isPopupOpen, setIsPopupOpen] = useState(false)
+  const navigate = useNavigate();
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const navigateToLivingRoom = () => {
-    navigate("/rooms/livingRoom")
-  }
+    navigate("/rooms/livingRoom");
+  };
   const navigateToBedRoom = () => {
-    navigate("/rooms/bedRoom")
-  }
+    navigate("/rooms/bedRoom");
+  };
   const navigateToBathRoom = () => {
-    navigate("/rooms/bathRoom")
-  }
+    navigate("/rooms/bathRoom");
+  };
   const navigateToKitchen = () => {
-    navigate("/rooms/kitchen")
-  }
+    navigate("/rooms/kitchen");
+  };
 
   // Handler for closing the popup
   const popupCloseHandler = () => {
-    setIsPopupOpen(false)
-  }
-  const handleOpenPopup = () => setIsPopupOpen(true)
+    setIsPopupOpen(false);
+  };
+  const handleOpenPopup = () => setIsPopupOpen(true);
 
   return (
     <>
@@ -162,7 +162,7 @@ const HomeControl = () => {
         </div>
 
         {/* Statictics*/}
-        <Statictics />
+        {/* <Statictics /> */}
 
         {/* Custom Popup for TodoList */}
         <CustomPopup
@@ -174,7 +174,7 @@ const HomeControl = () => {
         </CustomPopup>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default HomeControl
+export default HomeControl;

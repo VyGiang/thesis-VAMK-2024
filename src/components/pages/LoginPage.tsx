@@ -1,6 +1,7 @@
-import BackgroundImage from "@/assets/background_main_page.png"
-import SignIn from "../auth/SignIn"
-import AuthDetails from "../auth/AuthDetails"
+import BackgroundImage from "@/assets/background_main_page.png";
+import { Button } from "../ui/button";
+import SignIn from "../auth/SignIn";
+import AuthDetails from "../auth/AuthDetails";
 
 const LoginPage = () => {
   return (
@@ -19,7 +20,7 @@ const LoginPage = () => {
         <AuthDetails />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

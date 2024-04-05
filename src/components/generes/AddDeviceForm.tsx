@@ -1,9 +1,9 @@
 // FormWithFloatingLabels.tsx
-import React from "react"
+import React from "react";
 
 interface Props {
-  isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
 }
 
 const AddDeviceForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
@@ -16,12 +16,16 @@ const AddDeviceForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
     : {
         opacity: 0,
         visibility: "hidden" as const,
-      }
+      };
 
   // Prevent form from closing when clicking inside the form
   const handleFormClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.stopPropagation()
-  }
+    e.stopPropagation();
+  };
+
+  const submitForm = () => {
+    console.log("Test");
+  };
   return (
     <div
       style={overlayStyle}
@@ -29,7 +33,7 @@ const AddDeviceForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
       onClick={() => setIsOpen(false)} // Close the form when the overlay is clicked
     >
       <div
-        className="w-full px-4 py-6 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto bg-white border-0 shadow-lg sm:rounded-3xl"
+        className="w-full px-4 py-6 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-2xl mx-auto bg-white border-0 shadow-lg sm:rounded-3xl"
         onClick={handleFormClick} // Prevent click through to the overlay
       >
         <h1 className="text-2xl font-bold mb-8">Add Devices</h1>
@@ -39,16 +43,30 @@ const AddDeviceForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
             <input
               type="text"
               name="name"
-              placeholder=" "
+              placeholder="Enter Device"
               className={`pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200  "border-red-600" : ""
               }`}
             />
             <label
               htmlFor="name"
               className="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
-            >
-              Enter Device
-            </label>
+            ></label>
+
+            <span className="text-sm text-red-600">Name is required</span>
+          </div>
+
+          <div className="relative z-0 w-full mb-5">
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter Device"
+              className={`pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200  "border-red-600" : ""
+              }`}
+            />
+            <label
+              htmlFor="name"
+              className="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
+            ></label>
 
             <span className="text-sm text-red-600">Name is required</span>
           </div>
@@ -57,15 +75,13 @@ const AddDeviceForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
             <input
               type="password"
               name="password"
-              placeholder=" "
+              placeholder="Enter password"
               className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
             />
             <label
               htmlFor="password"
               className="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
-            >
-              Enter password
-            </label>
+            ></label>
             <span className="text-sm text-red-600 hidden" id="error">
               Password is required
             </span>
@@ -130,16 +146,14 @@ const AddDeviceForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
               <input
                 type="text"
                 name="date"
-                placeholder=" "
+                placeholder="Date"
                 onClick="this.setAttribute('type', 'date');"
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
               <label
                 htmlFor="date"
                 className="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
-              >
-                Date
-              </label>
+              ></label>
               <span className="text-sm text-red-600 hidden" id="error">
                 Date is required
               </span>
@@ -148,16 +162,14 @@ const AddDeviceForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
               <input
                 type="text"
                 name="time"
-                placeholder=" "
+                placeholder="Time"
                 onClick="this.setAttribute('type', 'time');"
                 className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
               />
               <label
                 htmlFor="time"
                 className="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
-              >
-                Time
-              </label>
+              ></label>
               <span className="text-sm text-red-600 hidden" id="error">
                 Time is required
               </span>
@@ -168,7 +180,7 @@ const AddDeviceForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
             <input
               type="number"
               name="money"
-              placeholder=" "
+              placeholder="Amount"
               className="pt-3 pb-2 pl-5 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
             />
             <div className="absolute top-0 left-0 mt-3 ml-1 text-gray-400">
@@ -177,9 +189,7 @@ const AddDeviceForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
             <label
               htmlFor="money"
               className="absolute duration-300 top-3 left-5 -z-1 origin-0 text-gray-500"
-            >
-              Amount
-            </label>
+            ></label>
             <span className="text-sm text-red-600 hidden" id="error">
               Amount is required
             </span>
@@ -189,7 +199,7 @@ const AddDeviceForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
             <input
               type="text"
               name="duration"
-              placeholder=" "
+              placeholder="Duration"
               className="pt-3 pb-2 pr-12 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
             />
             <div className="absolute top-0 right-0 mt-3 mr-4 text-gray-400">
@@ -198,9 +208,7 @@ const AddDeviceForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
             <label
               htmlFor="duration"
               className="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
-            >
-              Duration
-            </label>
+            ></label>
             <span className="text-sm text-red-600 hidden" id="error">
               Duration is required
             </span>
@@ -209,14 +217,14 @@ const AddDeviceForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
           <button
             type="button"
             className="w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-pink-500 hover:bg-pink-600 hover:shadow-lg focus:outline-none"
-            onClick={() => setIsOpen(false)}
+            onClick={submitForm}
           >
             Toggle Error
           </button>
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AddDeviceForm
+export default AddDeviceForm;

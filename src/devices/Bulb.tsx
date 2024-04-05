@@ -1,57 +1,57 @@
-import { ISmartHomeDevice } from "@/components/generes/StaticticsControl"
-import React from "react"
+import {
+  DeviceType,
+  IDevice,
+  Manufacturer,
+  Status,
+} from "@/lib/DataInterfaces";
+import { Timestamp } from "@firebase/firestore";
 
-class Bulb implements ISmartHomeDevice {
-  id: string
-  type: "light" | "thermostat" | "camera" | "lock" | "plug"
-  name: string
-  status?: number
-  brightness?: number
-  color?: string
-  temperature?: number
-  locked?: boolean
-  powerConsumption?: number
-  costPerKw?: number
+export class Bulb implements IDevice {
+  name: string;
+  type: DeviceType;
+  idDevice: number;
+  roomId: number;
+  manufacturer: Manufacturer;
+  status: Status;
+  cost: number;
+  preTimestamp: Timestamp;
+  postTimestamp: Timestamp;
+  powerConsumption: number;
 
-  constructor(device: ISmartHomeDevice) {
-    this.id = device.id
-    this.type = device.type
-    this.name = device.name
-    this.status = device.status
-    this.brightness = device.brightness
-    this.color = device.color
-    this.temperature = device.temperature
-    this.locked = device.locked
-    this.powerConsumption = device.powerConsumption
-    this.costPerKw = device.costPerKw
+  constructor(device: IDevice) {
+    this.name = device.name;
+    this.type = DeviceType.Bulb;
+    this.idDevice = device.idDevice;
+    this.roomId = device.roomId;
+    this.manufacturer = device.manufacturer;
+    this.cost = device.cost;
+
+    this.status = device.status || Status.OFF;
+    this.preTimestamp = device.preTimestamp;
+    this.postTimestamp = device.postTimestamp;
+    this.powerConsumption = device.powerConsumption;
   }
 
-  // Getters
-  getStatus() {
-    return this.status
+  public getStatus(): number | undefined {
+    return this.status;
   }
 
-  getPowerConsumption() {
-    return this.powerConsumption
+  public getPowerConsumption(): number | undefined {
+    return this.powerConsumption;
   }
 
-  // Setters
-  setStatus(status: number) {
-    this.status = status
+  private setStatus(status: Status): void {
+    this.status = status;
   }
 
-  setTemperature(temperature: number) {
-    if (this.type === "thermostat") {
-      this.temperature = temperature
-    }
+  private calculateCost(): number | undefined {
+    return (
+      this.powerConsumption *
+      (this.postTimestamp.toMillis() - this.preTimestamp.toMillis())
+    );
+  }
+
+  public getCost(): number | undefined {
+    return this.calculateCost();
   }
 }
-
-const TpLinkBulb = () => {
-  return <div>Bulb</div>
-}
-
-const PhilipsHueBulb = () => {
-  return <div>Bulb</div>
-}
-const

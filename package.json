@@ -22,7 +22,7 @@
     "ag-charts-react": "^9.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "firebase": "^10.7.2",
+    "firebase": "^10.10.0",
     "flowbite": "^2.2.1",
     "lucide-react": "^0.312.0",
     "moment": "^2.30.1",

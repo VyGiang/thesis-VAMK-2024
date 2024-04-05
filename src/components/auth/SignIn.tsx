@@ -1,34 +1,34 @@
-import React, { useState } from "react"
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
-import { AuthData } from "./AuthWrapper"
-import { useNavigate } from "react-router-dom"
-import Checkbox from "@mui/material/Checkbox"
+import React, { useState } from "react";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { AuthData } from "./AuthWrapper";
+import { useNavigate } from "react-router-dom";
+import Checkbox from "@mui/material/Checkbox";
 
 const SignIn = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const { login, user, logout } = AuthData()
-  const navigate = useNavigate()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login, user, logout } = AuthData();
+  const navigate = useNavigate();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value)
-  }
+    setEmail(e.target.value);
+  };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value)
-  }
+    setPassword(e.target.value);
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     if (user) {
-      logout()
-      navigate("")
+      logout();
+      navigate("");
     } else {
-      login(email, password)
-      navigate("/dashboard")
+      login(email, password);
+      navigate("/dashboard");
     }
-  }
+  };
 
   return (
     <div>
@@ -70,7 +70,7 @@ const SignIn = () => {
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;
