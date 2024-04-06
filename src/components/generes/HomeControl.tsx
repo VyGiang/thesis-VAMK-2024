@@ -36,15 +36,15 @@ const HomeControl = () => {
       <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Navbar */}
         <Navbar />
-        <div className="flex items-center justify-end">
+        <div className="flex items-center justify-end transform duration-500 hover:scale-105">
           <CurrentTime />
         </div>
 
         {/* main*/}
-        <div className=" bg-[#F0F0F0] sm:col-span-1 md:col-span-1 lg:col-span-2 rounded-xl  grid grid-cols-4 gap-5 p-5">
+        <div className=" bg-[#F0F0F0] sm:col-span-1 md:col-span-1 lg:col-span-2 rounded-xl  grid grid-cols-4 gap-5 p-5 dark:bg-[#66676d]">
           {/* Living Room */}
           <div
-            className="transform bg-white h-32 transition duration-500 hover:scale-105 hover:bg-blue-100 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1"
+            className="transform bg-white h-32 transition duration-500 hover:scale-105 hover:bg-blue-100 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1 dark:bg-[#414244]"
             onClick={navigateToLivingRoom}
           >
             <div className=" p-3">
@@ -71,7 +71,7 @@ const HomeControl = () => {
           </div>
           {/* Bedroom */}
           <div
-            className="transform duration-500 hover:scale-105 hover:bg-blue-100 bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1"
+            className="transform duration-500 hover:scale-105 hover:bg-blue-100 bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1  dark:bg-[#414244]"
             onClick={navigateToBedRoom}
           >
             <div className=" p-3">
@@ -98,7 +98,7 @@ const HomeControl = () => {
           </div>
           {/* Bathroom */}
           <div
-            className=" transform duration-500 hover:scale-105 hover:bg-blue-100 bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1"
+            className=" transform duration-500 hover:scale-105 hover:bg-blue-100 bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1  dark:bg-[#414244]"
             onClick={navigateToBathRoom}
           >
             <div className=" p-3">
@@ -125,7 +125,7 @@ const HomeControl = () => {
           </div>
           {/* Kitchen */}
           <div
-            className="transform duration-500 hover:scale-105 hover:bg-blue-100  bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1"
+            className="transform duration-500 hover:scale-105 hover:bg-blue-100  bg-white h-32 rounded-2xl sm:col-span-2 md:col-span-1 lg:col-span-1  dark:bg-[#414244]"
             onClick={navigateToKitchen}
           >
             <div className=" p-3">

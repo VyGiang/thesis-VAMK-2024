@@ -65,7 +65,7 @@ const TodoList: React.FC<{ onOpenPopup: () => void }> = ({ onOpenPopup }) => {
     <div>
       <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-5">
         {/* main*/}
-        <div className="  bg-white sm:col-span-1 md:col-span-1 lg:col-span-2 rounded-xl p-5">
+        <div className="  bg-white sm:col-span-1 md:col-span-1 lg:col-span-2 rounded-xl p-5  dark:bg-[#414244]">
           <div className="flex items-center justify-center space-x-4">
             <h1 className="text-4xl font-bold text-center flex items-center">
               TODO LIST
@@ -78,9 +78,10 @@ const TodoList: React.FC<{ onOpenPopup: () => void }> = ({ onOpenPopup }) => {
             </button>
           </div>
 
-          <div className="bg-blue-100 w-full max-w-4xl mx-auto rounded-lg shadow-md p-6">
+          <div className="bg-blue-100 w-full max-w-4xl mx-auto rounded-lg shadow-md p-6 dark:bg-[#2e537a]">
             <div className="flex justify-between mb-6">
-              <div className=" w-full max-w-3xl mx-auto">
+              <div className="w-full max-w-3xl mx-auto">
+                {/* Input field and add button */}
                 <div className="flex space-x-4 mb-6">
                   <input
                     type="text"
@@ -88,7 +89,7 @@ const TodoList: React.FC<{ onOpenPopup: () => void }> = ({ onOpenPopup }) => {
                     onChange={(e) => setNewTaskText(e.target.value)}
                     onKeyPress={handleKeyPress}
                     placeholder="Enter a new task"
-                    className="form-input mt-1 block w-full px-4 py-2 border rounded-md shadow-sm"
+                    className="form-input mt-1 block w-full px-4 py-2 border rounded-md shadow-sm dark:bg-[#1d1d1f] dark:text-white"
                     style={{ maxWidth: "85%" }}
                   />
                   <button
@@ -98,7 +99,8 @@ const TodoList: React.FC<{ onOpenPopup: () => void }> = ({ onOpenPopup }) => {
                     Add Task
                   </button>
                 </div>
-                <div className="space-y-4">
+                {/* Container for tasks */}
+                <div className="space-y-4 ">
                   {tasks.map((task) => (
                     <TodoItem
                       key={task.id}

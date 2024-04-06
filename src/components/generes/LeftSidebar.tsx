@@ -69,7 +69,7 @@ const LeftSidebar = () => {
         <div className="w-full flex flex-wrap justify-between">
           {/* Dashboard */}
           <div
-            className="px-10 py-5 inline-flex hover:bg-[#EBF5FF] items-center cursor-pointer "
+            className="px-10 py-5 inline-flex hover:bg-[#EBF5FF]  dark:hover:bg-[#777a7c] items-center cursor-pointer "
             onClick={navigateToHome}
           >
             <div className="inline-flex transform duration-500 hover:scale-110 items-center">
@@ -84,7 +84,7 @@ const LeftSidebar = () => {
           </div>
           {/* Rooms */}
           <div
-            className="px-10 py-5 inline-flex hover:bg-[#EBF5FF] items-center cursor-pointer"
+            className="px-10 py-5 inline-flex hover:bg-[#EBF5FF]  dark:hover:bg-[#777a7c] items-center cursor-pointer"
             onClick={navigateToRooms}
           >
             <div className="inline-flex transform duration-500 hover:scale-110 items-center">
@@ -94,7 +94,7 @@ const LeftSidebar = () => {
           </div>
           {/* Devices */}
           <div
-            className="px-10 py-5 inline-flex hover:bg-[#EBF5FF] items-center cursor-pointer"
+            className="px-10 py-5 inline-flex hover:bg-[#EBF5FF]  dark:hover:bg-[#777a7c] items-center cursor-pointer"
             onClick={navigateToDevices}
           >
             <div className="inline-flex transform duration-500 hover:scale-110 items-center">
@@ -108,7 +108,7 @@ const LeftSidebar = () => {
           </div>
           {/* Statistics */}
           <div
-            className=" px-10 py-5 inline-flex hover:bg-[#EBF5FF] items-center cursor-pointer"
+            className=" px-10 py-5 inline-flex hover:bg-[#EBF5FF]  dark:hover:bg-[#777a7c] items-center cursor-pointer"
             onClick={navigateToStatictics}
           >
             <div className="inline-flex transform duration-500 hover:scale-110 items-center">
@@ -125,7 +125,7 @@ const LeftSidebar = () => {
       {/* Logout */}
       <div className="flex  justify-end items-center pb-5">
         <div
-          className="px-10 py-3 inline-flex hover:bg-[#EBF5FF] items-center cursor-pointer pb-5"
+          className="px-10 py-3 inline-flex hover:bg-[#EBF5FF]  dark:hover:bg-[#777a7c] items-center cursor-pointer pb-5"
           onClick={handleLogout}
         >
           <div className="inline-flex transform duration-500 hover:scale-110 items-center">
@@ -134,7 +134,7 @@ const LeftSidebar = () => {
               alt="dashboard"
               className="w-6/12 object-contain"
             ></img>
-            <span className="pl-2 pr-2 text-2xl text-black font-bold">
+            <span className="pl-2 pr-2 text-2xl text-black font-bold dark:text-white">
               Logout
             </span>
           </div>

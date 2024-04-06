@@ -57,6 +57,7 @@ const StaticControl: React.FC = () => {
           </div>
         </div>
       </div>
+      </div>
     </div>
   );
 };

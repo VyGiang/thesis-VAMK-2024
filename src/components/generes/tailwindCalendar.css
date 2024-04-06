@@ -3,6 +3,7 @@
   @apply border-0 shadow-none rounded-none;
   width: 100%;
   @apply z-0; /* Ensure the calendar takes full width */
+  @apply dark:bg-[#1c1d1f];
 }
 
 .calendar-container .react-calendar__navigation button {

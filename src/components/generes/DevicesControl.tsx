@@ -4,6 +4,7 @@ import OnOffButton from "./OnOffButton"
 import { FaPlus } from "react-icons/fa"
 import { SiHomeassistant } from "react-icons/si"
 import AddDeviceForm from "./AddDeviceForm"
+import CurrentTime from "./CurrentTime"
 
 const DevicesControl = () => {
   const [isFormOpen, setIsFormOpen] = useState(false)
@@ -12,14 +13,12 @@ const DevicesControl = () => {
       <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Navbar */}
         <Navbar />
-        <div className="flex items-center justify-end">
-          <p className="text-right text-sm font-bold">
-            Monday, 11 December 2023
-          </p>
+        <div className="flex items-center justify-end ransform duration-500 hover:scale-105">
+          <CurrentTime />
         </div>
 
         {/* main*/}
-        <div className="  bg-[#F0F0F0] sm:col-span-1 md:col-span-1 lg:col-span-2 rounded-xl  grid grid-cols-4 gap-5 p-5">
+        <div className="  bg-[#F0F0F0] sm:col-span-1 md:col-span-1 lg:col-span-2 rounded-xl  grid grid-cols-4 gap-5 p-5 dark:bg-[#66676d]">
           <div className="col-span-4">
             <h1 className="lg:text-5xl  sm:text-lg md:text-lg font-bold mb-3">
               Devices

@@ -1,6 +1,10 @@
 // MobileHeader.js
-import React, { useState } from "react"
-import { Menu as MenuIcon, X as CloseIcon } from "react-feather"
+import React, { useEffect, useState } from "react"
+import { useDarkMode } from "./DarkModeContext"
+import { GiHamburgerMenu, GiMoon } from "react-icons/gi"
+import { IoMdClose } from "react-icons/io"
+import { useNavigate } from "react-router-dom"
+import { AuthData } from "../auth/AuthWrapper"
 
 const MobileHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -12,66 +16,165 @@ const MobileHeader = () => {
   const closeMenu = () => {
     setIsMenuOpen(false)
   }
+  const navigate = useNavigate()
+  const { logout } = AuthData()
+
+  const navigateToHome = () => {
+    navigate("/dashboard")
+  }
+  const navigateToRooms = () => {
+    navigate("/rooms")
+  }
+  const navigateToDevices = () => {
+    navigate("/devices")
+  }
+  const navigateToStatictics = () => {
+    navigate("/statictics")
+  }
+  const handleLogout = () => {
+    logout()
+    navigate("/")
+  }
+  const { isDarkMode, setIsDarkMode } = useDarkMode()
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode)
+  }
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Explicitly typing the event
+      if (event.shiftKey && event.key === "D") {
+        toggleDarkMode()
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+
+    // Cleanup to remove the event listener when the component unmounts
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [isDarkMode, toggleDarkMode])
+
   return (
-    <header className="bg-[#305B81] p-4 md:p-8 relative lg:hidden sm:block md:block">
-      <div className="container mx-auto relative z-10">
-        <div className="flex md:flex-row items-center justify-between">
-          {/* Logo */}
-          <div className="text-white text-lg font-bold">Your Logo</div>
-
-          {/* Navigation */}
-          <nav
-            className={`absolute top-full left-0 w-auto sm:w-full md:w-auto lg:w-auto md:relative md:flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 transition-all duration-300 bg-vy-jang ${
-              isMenuOpen ? "flex" : "hidden"
-            }`}
-            style={{ zIndex: 9 }} // Thiết lập thứ bậc hiển thị
-          >
-            <a
-              href="/#"
-              className="text-white hover:text-gray-300 block py-2 px-4"
-              onClick={closeMenu}
+    <header className="bg-white p-4 md:p-4 relative lg:hidden sm:block md:block dark:bg-[#305B81]">
+      <nav className="flex justify-between items-center mx-auto max-w-screen-xl">
+        {/* Left Section: Avatar and Welcome Message */}
+        <div className="flex items-center">
+          <img
+            src="/images/avatar.png"
+            alt="Avatar"
+            className="sm:w-2/12 md:w-2.5/12"
+          />
+          <div className="ml-3">
+            <h2 className="text-lg font-semibold">Welcome Vivian!</h2>
+            <label
+              htmlFor="avatarInput"
+              className="cursor-pointer text-blue-600 hover:text-blue-800 transition duration-200 dark:text-yellow-600"
             >
-              Dashboard
-            </a>
-            <a
-              href="/#"
-              className="text-white hover:text-gray-300 block py-2 px-4"
-              onClick={closeMenu}
-            >
-              Room
-            </a>
-            <a
-              href="/#"
-              className="text-white hover:text-gray-300 block py-2 px-4"
-              onClick={closeMenu}
-            >
-              Devices
-            </a>
-            <a
-              href="/#"
-              className="text-white hover:text-gray-300 block py-2 px-4"
-              onClick={closeMenu}
-            >
-              Statictics
-            </a>
-          </nav>
-
-          {/* Mobile Navigation Toggle */}
-          <div className="md:hidden">
-            {isMenuOpen ? (
-              // Nút đóng menu với biểu tượng "X"
-              <button className="text-white" onClick={closeMenu}>
-                <CloseIcon size={24} />
-              </button>
-            ) : (
-              // Nút mở menu với biểu tượng
-              <button className="text-white" onClick={toggleMenu}>
-                <MenuIcon size={24} />
-              </button>
-            )}
+              Change Avatar
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              id="avatarInput"
+            />
           </div>
         </div>
-      </div>
+
+        {/* Right Section: Links and Menu Toggle */}
+        <div className="flex items-center">
+          {/* dark mode */}
+          <button
+            className="flex items-center justify-center pr-1"
+            onClick={toggleDarkMode}
+          >
+            <GiMoon className="w-7 h-7 md:w-9 md:h-9 " />
+          </button>
+          {/* Hamburger button */}
+          <button
+            type="button"
+            className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            onClick={toggleMenu}
+          >
+            {isMenuOpen ? (
+              <IoMdClose className="w-7 h-7 md:w-8 md:h-8" />
+            ) : (
+              <GiHamburgerMenu className="w-7 h-7 md:w-8 md:h-8" />
+            )}
+          </button>
+        </div>
+      </nav>
+
+      {/* Conditionally render mobile menu */}
+      {isMenuOpen && (
+        <div
+          className="flex lg:hidden justify-between items-center w-full"
+          id="mobile-menu"
+        >
+          {/* Mobile Menu Items */}
+          <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+            <li>
+              <a
+                className="block py-2 pr-4 pl-3  text-gray-700  rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white"
+                onClick={(e) => {
+                  e.preventDefault() // Prevent default link behavior
+                  navigateToHome()
+                  closeMenu()
+                }}
+              >
+                Dash Board
+              </a>
+            </li>
+            <li>
+              <a
+                className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
+                onClick={(e) => {
+                  e.preventDefault() // Prevent default link behavior
+                  navigateToRooms()
+                  closeMenu()
+                }}
+              >
+                Rooms
+              </a>
+            </li>
+            <li>
+              <a
+                className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
+                onClick={(e) => {
+                  e.preventDefault() // Prevent default link behavior
+                  navigateToDevices()
+                  closeMenu()
+                }}
+              >
+                Devices
+              </a>
+            </li>
+            <li>
+              <a
+                onClick={(e) => {
+                  e.preventDefault() // Prevent default link behavior
+                  navigateToStatictics()
+                  closeMenu()
+                }}
+                className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
+              >
+                Statistics
+              </a>
+            </li>
+            <li>
+              <a
+                className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
+                onClick={(e) => {
+                  e.preventDefault() // Prevent default link behavior
+                  handleLogout()
+                  closeMenu()
+                }}
+              >
+                Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      )}
     </header>
   )
 }

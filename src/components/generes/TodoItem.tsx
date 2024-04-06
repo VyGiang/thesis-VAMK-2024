@@ -28,7 +28,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
   }
 
   return (
-    <div className="flex items-center space-x-3 bg-white p-4 rounded-2xl shadow">
+    <div className="flex items-center space-x-3 bg-white p-4 rounded-2xl shadow  dark:bg-[#1d1d1f]">
       <input
         type="checkbox"
         checked={task.completed}

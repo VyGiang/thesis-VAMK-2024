@@ -38,6 +38,9 @@ const CustomPopup: FC<CustomPopupProps> = ({
       document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [onClose])
+  const contentClassName = show
+    ? `${popupStyles.content} ${popupStyles.popupContentExpanded}`
+    : popupStyles.content
 
   return (
     <div
@@ -52,7 +55,7 @@ const CustomPopup: FC<CustomPopupProps> = ({
         <span className={popupStyles.close} onClick={onClose}>
           &times;
         </span>
-        <div className={popupStyles.content}>{children}</div>
+        <div className={contentClassName}>{children}</div>
       </div>
     </div>
   )
