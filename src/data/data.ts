@@ -6,8 +6,13 @@ import {
   Manufacturer,
   IRoom,
   Status,
-} from "./lib/DataInterfaces";
+  parseDeviceType,
+  Relationship,
+  IFamilyMember,
+} from "../lib/DataInterfaces";
 import { Bulb } from "./devices/Bulb";
+import { AirCondition } from "./devices/AC";
+import { FamilyMember } from "./family/FamilyMember";
 
 // Dummy Users
 export const users: IUserLogin[] = [
@@ -29,7 +34,7 @@ export const users: IUserLogin[] = [
 export const devices: IDevice[] = [
   new Bulb({
     name: "Smart LED Bulb",
-    type: DeviceType.Bulb, // Assuming you have a type property in IDevice
+    type: parseDeviceType(DeviceType.Bulb), // Assuming you have a type property in IDevice
     idDevice: 101,
     roomId: 1,
     manufacturer: Manufacturer.Philips,
@@ -42,7 +47,7 @@ export const devices: IDevice[] = [
 
   new Bulb({
     name: "Smart LED Bulb 2",
-    type: DeviceType.Bulb, // This line ensures your device is of the correct type
+    type: parseDeviceType(DeviceType.Bulb), // This line ensures your device is of the correct type
     idDevice: 102, // Changed ID for uniqueness
     roomId: 1,
     manufacturer: Manufacturer.Bosch,
@@ -52,9 +57,9 @@ export const devices: IDevice[] = [
     postTimestamp: Timestamp.fromDate(new Date("2024-03-02T10:00:00Z")), // Adjusted date for variety
     powerConsumption: 0.6, // Slight change for variety
   }),
-  new Bulb({
-    name: "Smart LED Bulb 2",
-    type: DeviceType.Bulb, // This line ensures your device is of the correct type
+  new AirCondition({
+    name: "Air Condition",
+    type: parseDeviceType(DeviceType.Bulb), // This line ensures your device is of the correct type
     idDevice: 103, // Changed ID for uniqueness
     roomId: 1,
     manufacturer: Manufacturer.Bosch,
@@ -63,6 +68,18 @@ export const devices: IDevice[] = [
     preTimestamp: Timestamp.fromDate(new Date("2024-03-02T08:00:00Z")), // Adjusted date for variety
     postTimestamp: Timestamp.fromDate(new Date("2024-03-02T10:00:00Z")), // Adjusted date for variety
     powerConsumption: 0.6, // Slight change for variety
+    temperatureSetting: 24,
+  }),
+];
+
+// Family Members
+export const fams: IFamilyMember[] = [
+  new FamilyMember({
+    name: "John Doe",
+    memberId: 1,
+    age: 35,
+    relationship: Relationship.Parent,
+    avatarUrl: "https://example.com/avatar/john.jpg",
   }),
 ];
 

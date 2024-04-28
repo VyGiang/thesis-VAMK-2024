@@ -1,12 +1,51 @@
 import { Timestamp } from "firebase/firestore";
 
 export enum DeviceType {
+  UNKNOWN = -1,
   Thermostat,
   Bulb,
   Plug,
-  Camera,
-  Lock,
+  AirCondition,
+  Stove,
 }
+
+export enum Relationship {
+  Parent,
+  Child,
+  Spouse,
+  Sibling,
+  Other,
+}
+
+export const parseDeviceType = (type: number): string => {
+  switch (type) {
+    case DeviceType.Thermostat:
+      return "Thermostat";
+    case DeviceType.Bulb:
+      return "Bulb";
+    case DeviceType.Plug:
+      return "Plug";
+    case DeviceType.AirCondition:
+      return "Air Condition";
+    case DeviceType.Stove:
+      return "Stove";
+    default:
+      return "Unknown";
+  }
+};
+
+export const parseDeviceStatus = (status: Status): string => {
+  switch (status) {
+    case Status.ON:
+      return "ON";
+    case Status.OFF:
+      return "OFF";
+    case Status.BROKEN:
+      return "BROKEN";
+    default:
+      return "Unknown";
+  }
+};
 
 export enum Status {
   ON,
@@ -34,7 +73,7 @@ export interface IUserLogin {
 
 export interface IDevice {
   name: string;
-  type: DeviceType;
+  type: string;
   idDevice: number;
   roomId: number;
   manufacturer: Manufacturer;
@@ -43,6 +82,9 @@ export interface IDevice {
   preTimestamp: Timestamp;
   postTimestamp: Timestamp;
   powerConsumption: number; // in kWh
+  temperatureSetting?: number;
+  currentTemperature?: number;
+  targetTemperature?: number;
 
   // // Specific functions
   // getStatus(): number | undefined;
@@ -56,4 +98,12 @@ export interface IRoom {
   roomId: number;
   ownerId?: string;
   isPrivate?: boolean;
+}
+
+export interface IFamilyMember {
+  name: string;
+  memberId: number;
+  age: number;
+  relationship: Relationship;
+  avatarUrl?: string; // Optional property for a profile picture
 }

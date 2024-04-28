@@ -1,11 +1,45 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react";
+import { db } from "@/firebase";
+import { doc, getDoc, setLogLevel } from "firebase/firestore";
+import { updateDeviceStatus } from "@/lib/FirebaseCollection";
+import { Status } from "@/lib/DataInterfaces";
 
-const OnOffButton = () => {
-  const [isOn, setIsOn] = useState(false)
+const OnOffButton = ({ userId, deviceId }) => {
+  const [isOn, setIsOn] = useState(false);
 
-  const toggle = () => {
-    setIsOn(!isOn)
-  }
+  useEffect(() => {
+    // Fetch the initial status from Firestore
+    const fetchInitialStatus = async () => {
+      const deviceRef = doc(
+        db,
+        "users",
+        userId,
+        "devices",
+        `device_${deviceId}`
+      );
+      const docSnap = await getDoc(deviceRef);
+      if (docSnap.exists() && docSnap.data().status !== undefined) {
+        setIsOn(docSnap.data().status === Status.OFF);
+      }
+    };
+
+    fetchInitialStatus();
+  }, [userId, deviceId]);
+
+  const toggle = async () => {
+    const newStatus = isOn ? Status.OFF : Status.ON;
+    setIsOn(!isOn);
+
+    try {
+      // Call Firestore to update the status
+      await updateDeviceStatus(userId, deviceId);
+    } catch (error) {
+      console.error("Failed to update device status:", error);
+      // Optionally revert the UI toggle if the Firestore update fails
+      setIsOn(!newStatus);
+    }
+  };
+
   return (
     <button
       onClick={toggle}
@@ -24,7 +58,7 @@ const OnOffButton = () => {
         </span>
       </div>
     </button>
-  )
-}
+  );
+};
 
-export default OnOffButton
+export default OnOffButton;

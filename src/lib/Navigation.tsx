@@ -1,12 +1,12 @@
-import Rooms from "@/components/pages/Rooms"
-import Devices from "@/components/pages/Devices"
-import LoginPage from "@/components/pages/LoginPage"
-import DashBoard from "@/components/pages/DashBoard"
-import Statictics from "@/components/pages/Statictics"
-import LivingRoom from "@/components/pages/LivingRoom"
-import BathRoom from "@/components/pages/BathRoom"
-import BedRoom from "@/components/pages/BedRoom"
-import Kitchen from "@/components/pages/Kitchen"
+import Rooms from "@/components/pages/Rooms";
+import Devices from "@/components/pages/Devices";
+import LoginPage from "@/components/pages/LoginPage";
+import DashBoard from "@/components/pages/DashBoard";
+import Statictics from "@/components/pages/Statictics";
+import LivingRoom from "@/components/pages/LivingRoom";
+import BathRoom from "@/components/pages/BathRoom";
+import BedRoom from "@/components/pages/BedRoom";
+import Kitchen from "@/components/pages/Kitchen";
 
 export const nav = [
   {
@@ -63,4 +63,10 @@ export const nav = [
     element: <Statictics />,
     isPrivate: true,
   },
-]
+  {
+    path: "/admin",
+    name: "/admin",
+    element: <Statictics />,
+    isPrivate: false,
+  },
+];

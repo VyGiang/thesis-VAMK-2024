@@ -1,14 +1,18 @@
+import { db } from "@/firebase";
 import {
   DeviceType,
   IDevice,
   Manufacturer,
   Status,
+  parseDeviceType,
 } from "@/lib/DataInterfaces";
+import { updateDeviceStatus } from "@/lib/FirebaseCollection";
 import { Timestamp } from "@firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 export class Bulb implements IDevice {
   name: string;
-  type: DeviceType;
+  type: string;
   idDevice: number;
   roomId: number;
   manufacturer: Manufacturer;
@@ -20,7 +24,7 @@ export class Bulb implements IDevice {
 
   constructor(device: IDevice) {
     this.name = device.name;
-    this.type = DeviceType.Bulb;
+    this.type = parseDeviceType(DeviceType.Bulb);
     this.idDevice = device.idDevice;
     this.roomId = device.roomId;
     this.manufacturer = device.manufacturer;
@@ -30,6 +34,34 @@ export class Bulb implements IDevice {
     this.preTimestamp = device.preTimestamp;
     this.postTimestamp = device.postTimestamp;
     this.powerConsumption = device.powerConsumption;
+  }
+
+  public toFirestore() {
+    return {
+      name: this.name,
+      type: this.type,
+      idDevice: this.idDevice,
+      roomId: this.roomId,
+      manufacturer: this.manufacturer,
+      status: this.status,
+      cost: this.cost,
+      preTimestamp: this.preTimestamp,
+      postTimestamp: this.postTimestamp,
+      powerConsumption: this.powerConsumption,
+    };
+  }
+
+  // Method to toggle the device status
+  public async toggleStatus(): Promise<void> {
+    // Determine the new status based on the current status
+    const newStatus = this.status === Status.OFF ? Status.ON : Status.OFF;
+
+    // Update local object's status
+    this.status = newStatus;
+
+    console.log(
+      `Device ${this.idDevice} type ${this.type} status toggled to ${newStatus}.`
+    );
   }
 
   public getStatus(): number | undefined {
