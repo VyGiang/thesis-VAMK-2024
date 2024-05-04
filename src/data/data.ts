@@ -13,6 +13,8 @@ import {
 import { Bulb } from "./devices/Bulb";
 import { AirCondition } from "./devices/AC";
 import { FamilyMember } from "./family/FamilyMember";
+import { Stove } from "./devices/Stove";
+import { Thermostat } from "./devices/Thermostat";
 
 // Dummy Users
 export const users: IUserLogin[] = [
@@ -69,6 +71,32 @@ export const devices: IDevice[] = [
     postTimestamp: Timestamp.fromDate(new Date("2024-03-02T10:00:00Z")), // Adjusted date for variety
     powerConsumption: 0.6, // Slight change for variety
     temperatureSetting: 24,
+  }),
+
+  new Stove({
+    name: "Stove",
+    type: parseDeviceType(DeviceType.Bulb), // This line ensures your device is of the correct type
+    idDevice: 104, // Changed ID for uniqueness
+    roomId: 1,
+    manufacturer: Manufacturer.Bosch,
+    status: Status.OFF,
+    cost: 15,
+    preTimestamp: Timestamp.fromDate(new Date("2024-03-02T08:00:00Z")), // Adjusted date for variety
+    postTimestamp: Timestamp.fromDate(new Date("2024-03-02T10:00:00Z")), // Adjusted date for variety
+    powerConsumption: 0.6, // Slight change for variety
+  }),
+
+  new Thermostat({
+    name: "Thermostat",
+    type: parseDeviceType(DeviceType.Bulb), // This line ensures your device is of the correct type
+    idDevice: 105, // Changed ID for uniqueness
+    roomId: 1,
+    manufacturer: Manufacturer.Bosch,
+    status: Status.OFF,
+    cost: 15,
+    preTimestamp: Timestamp.fromDate(new Date("2024-03-02T08:00:00Z")), // Adjusted date for variety
+    postTimestamp: Timestamp.fromDate(new Date("2024-03-02T10:00:00Z")), // Adjusted date for variety
+    powerConsumption: 0.6, // Slight change for variety
   }),
 ];
 

@@ -41,7 +41,17 @@ export class Thermostat implements IDevice {
     this.currentTemperature = device.currentTemperature ?? 0;
     this.targetTemperature = device.targetTemperature ?? 0;
   }
+  public async toggleStatus(): Promise<void> {
+    // Determine the new status based on the current status
+    const newStatus = this.status === Status.OFF ? Status.ON : Status.OFF;
 
+    // Update local object's status
+    this.status = newStatus;
+
+    console.log(
+      `Device ${this.idDevice}, type ${this.type} status toggled to ${newStatus}.`
+    );
+  }
   // Additional methods for thermostat-specific functionality
   setTargetTemperature(temperature: number): void {
     this.targetTemperature = temperature;

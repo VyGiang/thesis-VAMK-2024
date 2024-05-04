@@ -1,6 +1,6 @@
-import React from "react"
-import OnOffButton from "./OnOffButton"
-import Navbar from "./Navbar"
+import React from "react";
+import OnOffButton from "../buttons/OnOffButton";
+import Navbar from "./Navbar";
 
 const LivingControl = () => {
   return (
@@ -48,7 +48,7 @@ const LivingControl = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LivingControl
+export default LivingControl;

@@ -1,7 +1,18 @@
 import { auth, db } from "@/firebase";
-import { setDoc, doc, Timestamp, updateDoc, getDoc } from "firebase/firestore";
+import {
+  setDoc,
+  doc,
+  Timestamp,
+  updateDoc,
+  getDoc,
+  getDocs,
+  collection,
+  deleteDoc,
+} from "firebase/firestore";
 import { IDevice, Status, parseDeviceStatus } from "./DataInterfaces";
 import { devices, fams, rooms } from "@/data/data";
+
+/********************************************************* ADD *********************************************************/
 
 export const addDevicesToFirestore = async () => {
   const userId = auth.currentUser?.uid;
@@ -64,36 +75,6 @@ export const addAllDevicesToUser = async (userId: string, device: IDevice) => {
   }
 };
 
-// Function to update the status of a specific device in a user's 'devices' subcollection
-export const updateDeviceStatus = async (userId: string, deviceId: number) => {
-  const deviceDocRef = doc(
-    db,
-    "users",
-    userId,
-    "devices",
-    `device_${deviceId}`
-  );
-
-  // Fetch the current status from Firestore
-  const docSnap = await getDoc(deviceDocRef);
-  if (!docSnap.exists()) {
-    throw new Error(`No device found with ID ${deviceId}`);
-  }
-
-  // Determine the new status
-  const currentStatus = docSnap.data().status;
-  const newStatus = currentStatus === Status.ON ? Status.OFF : Status.ON;
-
-  await updateDoc(deviceDocRef, {
-    status: newStatus,
-  });
-  console.log(
-    `Device status for device_${deviceId} updated to ${
-      newStatus ? parseDeviceStatus(Status.ON) : parseDeviceStatus(Status.OFF)
-    }.`
-  );
-};
-
 // Function to add a family member to a user's 'familyMembers' subcollection
 export const addFamilyMemberToUser = async (
   userId: string,
@@ -126,4 +107,127 @@ export const addRoomToUser = async (
     ...roomData,
   });
   console.log(`Room ${roomId} added to user ${userId} successfully.`);
+};
+
+/********************************************************* UPDATE *********************************************************/
+
+// Function to update the status of a specific device in a user's 'devices' subcollection
+export const updateDeviceStatus = async (userId: string, deviceId: number) => {
+  const deviceDocRef = doc(
+    db,
+    "users",
+    userId,
+    "devices",
+    `device_${deviceId}`
+  );
+
+  // Fetch the current status from Firestore
+  const docSnap = await getDoc(deviceDocRef);
+  if (!docSnap.exists()) {
+    throw new Error(`No device found with ID ${deviceId}`);
+  }
+
+  // Determine the new status
+  const currentStatus = docSnap.data().status;
+  const newStatus = currentStatus === Status.ON ? Status.OFF : Status.ON;
+
+  await updateDoc(deviceDocRef, {
+    status: newStatus,
+  });
+  console.log(
+    `Device status for device_${deviceId} updated to ${
+      newStatus ? parseDeviceStatus(Status.ON) : parseDeviceStatus(Status.OFF)
+    }.`
+  );
+};
+
+/********************************************************* READ *********************************************************/
+
+export const getAllDevicesFromUser = async (userId: string) => {
+  try {
+    const devicesCollectionRef = collection(db, "users", userId, "devices");
+    const snapshot = await getDocs(devicesCollectionRef);
+    const devicesList = snapshot.docs.map((doc) => doc.data());
+    return devicesList; // This returns an array of device objects
+  } catch (error) {
+    console.error("Error retrieving devices: ", error);
+  }
+};
+
+export const getFamilyMembersFromUser = async (userId: string) => {
+  try {
+    const familyMembersCollectionRef = collection(
+      db,
+      "users",
+      userId,
+      "familyMembers"
+    );
+    const snapshot = await getDocs(familyMembersCollectionRef);
+    const familyMembersList = snapshot.docs.map((doc) => doc.data());
+    return familyMembersList; // This returns an array of family member objects
+  } catch (error) {
+    console.error("Error retrieving family members: ", error);
+  }
+};
+
+export const getRoomsFromUser = async (userId: string) => {
+  try {
+    const roomsCollectionRef = collection(db, "users", userId, "rooms");
+    const snapshot = await getDocs(roomsCollectionRef);
+    const roomsList = snapshot.docs.map((doc) => doc.data());
+    return roomsList; // This returns an array of room objects
+  } catch (error) {
+    console.error("Error retrieving rooms: ", error);
+  }
+};
+
+/********************************************************* DELETE *********************************************************/
+export const deleteDeviceFromUser = async (
+  userId: string,
+  deviceId: number
+) => {
+  try {
+    const deviceDocRef = doc(
+      db,
+      "users",
+      userId,
+      "devices",
+      `device_${deviceId}`
+    );
+    await deleteDoc(deviceDocRef);
+    console.log(`Device ${deviceId} for user ${userId} deleted successfully.`);
+  } catch (error) {
+    console.error("Error deleting device: ", error);
+  }
+};
+
+export const deleteFamilyMemberFromUser = async (
+  userId: string,
+  memberId: number
+) => {
+  try {
+    const memberDocRef = doc(
+      db,
+      "users",
+      userId,
+      "familyMembers",
+      memberId.toString()
+    );
+    await deleteDoc(memberDocRef);
+    console.log(
+      `Family member ${memberId} for user ${userId} deleted successfully.`
+    );
+  } catch (error) {
+    console.error("Error deleting family member: ", error);
+  }
+};
+
+export const deleteRoomFromUser = async (userId: string, roomId: number) => {
+  try {
+    const roomDocRef = doc(db, "users", userId, "rooms", roomId.toString());
+    await deleteDoc(roomDocRef);
+    console.log(`Room ${roomId} for user ${userId} deleted successfully.`);
+  } catch (error) {
+    console.error("Error deleting room: ", error);
+  }
 };

@@ -1,7 +1,6 @@
 // Todo: Try CRUD operations with Firebase Firestore (update, delete, read)
 // For example, find how many devices which type is Bulb are in the Firestore
 // Add dummy data for family member and room
-// Add a other devices beside Bulb
 
 // Todo: Try to make a form to add a device to Firestore
 // Design the form with Tailwind CSS
@@ -13,31 +12,69 @@
 // to firestore
 // Use setInterval to update the status of devices every 1 minute
 
-import React from "react";
-import { FaPlus } from "react-icons/fa";
-import { SiHomeassistant } from "react-icons/si";
-import AddDeviceForm from "./AddDeviceForm";
+// Todo: Implement the feature to add a family member to Firestore
+// Add a button to add a family member to Firestore
+// Add a form to add a family member to Firestore
+
+// Todo: Implement the feature to add a room to Firestore
+// Add a button to add a room to Firestore
+// Add a form to add a room to Firestore
+
+// Todo: Add error handling. Like global error handling. This will be displayed in the UI
+// on top right corner?
+
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { auth } from "@/firebase";
-import OnOffButton from "./OnOffButton";
+import OnOffButton from "../buttons/OnOffButton";
 import {
   addDevicesToFirestore,
   addFamilyMembersToFirestore,
   addRoomsToFirestore,
+  deleteDeviceFromUser,
+  getAllDevicesFromUser,
 } from "@/lib/FirebaseCollection";
-import { devices } from "@/data/data";
+import ActionButton from "../buttons/ActionButton";
+import { FaMinus, FaPlus } from "react-icons/fa";
+import { IDevice } from "@/lib/DataInterfaces";
 
 const StaticControl: React.FC = () => {
-  const userId = auth.currentUser?.uid;
+  const [localDevices, setLocalDevices] = useState<IDevice[]>([]);
+  const userId = auth.currentUser?.uid ?? "";
 
-  const toggleDeviceStatus = async (device) => {
-    if (!userId) {
-      console.error("No user is currently signed in.");
-      return;
-    }
-    // Call the method to toggle status from the device instance
-    await device.toggleStatus(userId);
+  const fetchData = async () => {
+    // Fetch devices from Firestore and update the state
+    const fetchedDevices = await getAllDevicesFromUser(userId);
+    setLocalDevices(fetchedDevices as IDevice[]);
   };
+
+  const handleDeleteDevice = async (deviceId: number) => {
+    if (window.confirm("Are you sure you want to delete this device?")) {
+      await deleteDeviceFromUser(userId, deviceId);
+      setLocalDevices((prevDevices) =>
+        prevDevices.filter((device) => device.idDevice !== deviceId)
+      );
+    }
+  };
+
+  const handleAddDevice = async () => {
+    await addDevicesToFirestore();
+    fetchData();
+  };
+
+  const handleAddFamilyMember = async () => {
+    await addFamilyMembersToFirestore();
+    fetchData();
+  };
+
+  const handleAddRoom = async () => {
+    await addRoomsToFirestore();
+    fetchData();
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [userId]);
 
   return (
     <div>
@@ -58,93 +95,49 @@ const StaticControl: React.FC = () => {
             </h1>
           </div>
           {/* Devices*/}
-          {/* Add button */}
-          <div className="transform duration-500 hover:scale-105 rounded-3xlxl sm:col-span-2 md:col-span-2 lg:col-span-1 flex flex-col items-center">
-            <div className="flex flex-col items-center p-3 rounded-2xl bg-gradient-to-br to-blue-300 via-blue-200 from-white lg:h-44 lg:w-44 sm:h-32 sm:w-32 md:h-64 md:w-64 justify-evenly shadow-2xl   ">
-              <button
-                className=" flex h-20 w-20 shrink-0 grow-0 items-center justify-center rounded-full bg-gradient-to-br to-blue-300 via-blue-200 from-white shadow-lg shadow-slate-500 border-4 border-white"
-                onClick={() => addDevicesToFirestore()}
-              >
-                <FaPlus className="w-6 h-6 md:w-8 md:h-8 lg:w-8 lg:h-8 text-white" />
-              </button>
-              <span className=" pt-2 pb-2 text-white flex items-center">
-                <SiHomeassistant className="inline-block" />
-                <span className="ml-2 md:text-xl sm:text-sm lg:text-xl font-medium ">
-                  Add Device
-                </span>
-              </span>
-            </div>
-          </div>
-          {/* Family Button */}
-          <div className="transform duration-500 hover:scale-105 rounded-3xlxl sm:col-span-2 md:col-span-2 lg:col-span-1 flex flex-col items-center">
-            <div className="flex flex-col items-center p-3 rounded-2xl bg-gradient-to-br to-blue-300 via-blue-200 from-white lg:h-44 lg:w-44 sm:h-32 sm:w-32 md:h-64 md:w-64 justify-evenly shadow-2xl   ">
-              <button
-                className=" flex h-20 w-20 shrink-0 grow-0 items-center justify-center rounded-full bg-gradient-to-br to-blue-300 via-blue-200 from-white shadow-lg shadow-slate-500 border-4 border-white"
-                onClick={() => addFamilyMembersToFirestore()}
-              >
-                <FaPlus className="w-6 h-6 md:w-8 md:h-8 lg:w-8 lg:h-8 text-white" />
-              </button>
-              <span className=" pt-2 pb-2 text-white flex items-center">
-                <SiHomeassistant className="inline-block" />
-                <span className="ml-2 md:text-xl sm:text-sm lg:text-xl font-medium ">
-                  Add Fam
-                </span>
-              </span>
-            </div>
-          </div>
-          {/* Room Button */}
-          <div className="transform duration-500 hover:scale-105 rounded-3xlxl sm:col-span-2 md:col-span-2 lg:col-span-1 flex flex-col items-center">
-            <div className="flex flex-col items-center p-3 rounded-2xl bg-gradient-to-br to-blue-300 via-blue-200 from-white lg:h-44 lg:w-44 sm:h-32 sm:w-32 md:h-64 md:w-64 justify-evenly shadow-2xl   ">
-              <button
-                className=" flex h-20 w-20 shrink-0 grow-0 items-center justify-center rounded-full bg-gradient-to-br to-blue-300 via-blue-200 from-white shadow-lg shadow-slate-500 border-4 border-white"
-                onClick={() => addRoomsToFirestore()}
-              >
-                <FaPlus className="w-6 h-6 md:w-8 md:h-8 lg:w-8 lg:h-8 text-white" />
-              </button>
-              <span className=" pt-2 pb-2 text-white flex items-center">
-                <SiHomeassistant className="inline-block" />
-                <span className="ml-2 md:text-xl sm:text-sm lg:text-xl font-medium ">
-                  Add Room
-                </span>
-              </span>
-            </div>
-          </div>
+          <ActionButton
+            icon={FaPlus}
+            label="Add Device"
+            onClick={handleAddDevice}
+          />
+          <ActionButton
+            icon={FaPlus}
+            label="Add Fam"
+            onClick={handleAddFamilyMember}
+          />
+          <ActionButton
+            icon={FaPlus}
+            label="Add Room"
+            onClick={handleAddRoom}
+          />
+          <ActionButton
+            icon={FaMinus}
+            label="Delete device"
+            onClick={() => handleDeleteDevice(102)}
+          />
           {/* 1 */}
           {/* Dynamically render devices */}
-          {devices.map((device) => (
-            <div
-              key={device.idDevice}
-              className="transform duration-500 hover:scale-105 rounded-3xlxl sm:col-span-2 md:col-span-2 lg:col-span-1 flex flex-col items-center"
-              onClick={() => toggleDeviceStatus(device)}
-            >
-              <div className="flex flex-col items-center p-1 rounded-2xl bg-green-100 lg:h-44 lg:w-44 sm:h-32 sm:w-32 md:h-64 md:w-64 justify-evenly shadow-lg  ">
-                {/* Render the correct OnOffButton based on device type */}
-                <OnOffButton userId={userId} deviceId={device.idDevice} />
-                <img
-                  src="/images/Tivi.png" // Ensure you have corresponding images
-                  className="lg:w-5/12 sm:w-3/12 md:w-3/12 object-contain"
-                  alt={device.name}
-                />
-                <span className="mt-2 text-lg font-medium pb-2">
-                  {device.name}
-                </span>
+          {localDevices.map((device) => (
+            <>
+              <div
+                key={device.idDevice}
+                className="transform duration-500 hover:scale-105 rounded-3xlxl sm:col-span-2 md:col-span-2 lg:col-span-1 flex flex-col items-center"
+              >
+                <div className="flex flex-col items-center p-1 rounded-2xl bg-green-100 lg:h-44 lg:w-44 sm:h-32 sm:w-32 md:h-64 md:w-64 justify-evenly shadow-lg  ">
+                  {/* Render the correct OnOffButton based on device type */}
+                  <OnOffButton userId={userId} deviceId={device.idDevice} />
+                  <img
+                    src="/images/Tivi.png" // Ensure you have corresponding images
+                    className="lg:w-5/12 sm:w-3/12 md:w-3/12 object-contain"
+                    alt={device.name}
+                  />
+                  <span className="mt-2 text-lg font-medium pb-2">
+                    {device.name}
+                  </span>
+                </div>
               </div>
-            </div>
+            </>
           ))}
-          {/* 1
-          <div className="transform duration-500 hover:scale-105 rounded-3xlxl sm:col-span-2 md:col-span-2 lg:col-span-1 flex flex-col items-center">
-            <div
-              className="flex flex-col items-center p-1 rounded-2xl bg-green-100 lg:h-44 lg:w-44 sm:h-32 sm:w-32 md:h-64 md:w-64 justify-evenly shadow-lg  "
-              onClick={clickDevice}
-            >
-              <OnOffButton userId={userId} deviceId={102} />
-              <img
-                src="/images/Tivi.png"
-                className="lg:w-5/12 sm:w-3/12 md:w-3/12 object-contain "
-              ></img>
-              <span className="mt-2 text-lg font-medium pb-2">Bulb 2</span>
-            </div>
-          </div> */}
         </div>
       </div>
     </div>

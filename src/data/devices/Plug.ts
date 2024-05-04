@@ -35,6 +35,16 @@ export class Plug implements IDevice {
     this.postTimestamp = device.postTimestamp;
     this.powerConsumption = device.powerConsumption;
   }
+  public async toggleStatus(): Promise<void> {
+    // Determine the new status based on the current status
+    const newStatus = this.status === Status.OFF ? Status.ON : Status.OFF;
 
+    // Update local object's status
+    this.status = newStatus;
+
+    console.log(
+      `Device ${this.idDevice}, type ${this.type} status toggled to ${newStatus}.`
+    );
+  }
   // Plug might not need additional specific methods, but you can add methods for smart features if applicable
 }

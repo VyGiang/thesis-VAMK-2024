@@ -1,13 +1,14 @@
-import React, { useState } from "react"
-import Navbar from "./Navbar"
-import OnOffButton from "./OnOffButton"
-import { FaPlus } from "react-icons/fa"
-import { SiHomeassistant } from "react-icons/si"
-import AddDeviceForm from "./AddDeviceForm"
-import CurrentTime from "./CurrentTime"
+import React, { useState } from "react";
+import Navbar from "./Navbar";
+import OnOffButton from "../buttons/OnOffButton";
+import { FaPlus } from "react-icons/fa";
+import { SiHomeassistant } from "react-icons/si";
+import AddDeviceForm from "./AddDeviceForm";
+import CurrentTime from "./CurrentTime";
+import ActionButton from "../buttons/ActionButton";
 
 const DevicesControl = () => {
-  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [isFormOpen, setIsFormOpen] = useState(false);
   return (
     <div>
       <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-5">
@@ -26,22 +27,11 @@ const DevicesControl = () => {
           </div>
           {/* Devices*/}
           {/* Add button */}
-          <div className="transform duration-500 hover:scale-105 rounded-3xlxl sm:col-span-2 md:col-span-2 lg:col-span-1 flex flex-col items-center">
-            <div className="flex flex-col items-center p-3 rounded-2xl bg-gradient-to-br to-blue-300 via-blue-200 from-white lg:h-44 lg:w-44 sm:h-32 sm:w-32 md:h-64 md:w-64 justify-evenly shadow-2xl   ">
-              <button
-                className=" flex h-20 w-20 shrink-0 grow-0 items-center justify-center rounded-full bg-gradient-to-br to-blue-300 via-blue-200 from-white shadow-lg shadow-slate-500 border-4 border-white"
-                onClick={() => setIsFormOpen(true)}
-              >
-                <FaPlus className="w-6 h-6 md:w-8 md:h-8 lg:w-8 lg:h-8 text-white" />
-              </button>
-              <span className=" pt-2 pb-2 text-white flex items-center">
-                <SiHomeassistant className="inline-block" />
-                <span className="ml-2 md:text-xl sm:text-sm lg:text-xl font-medium ">
-                  Add Device
-                </span>
-              </span>
-            </div>
-          </div>
+          <ActionButton
+            icon={FaPlus}
+            label="Add Device"
+            onClick={() => setIsFormOpen(true)}
+          />
           {/* 1 */}
           <div className="transform duration-500 hover:scale-105 rounded-3xlxl sm:col-span-2 md:col-span-2 lg:col-span-1 flex flex-col items-center">
             <div className="flex flex-col items-center p-1 rounded-2xl bg-green-100 lg:h-44 lg:w-44 sm:h-32 sm:w-32 md:h-64 md:w-64 justify-evenly shadow-lg  ">
@@ -80,7 +70,7 @@ const DevicesControl = () => {
       </div>
       <AddDeviceForm isOpen={isFormOpen} setIsOpen={setIsFormOpen} />
     </div>
-  )
-}
+  );
+};
 
-export default DevicesControl
+export default DevicesControl;
