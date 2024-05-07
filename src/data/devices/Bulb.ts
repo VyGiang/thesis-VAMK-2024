@@ -1,4 +1,3 @@
-import { db } from "@/firebase";
 import {
   DeviceType,
   IDevice,
@@ -6,9 +5,7 @@ import {
   Status,
   parseDeviceType,
 } from "@/lib/DataInterfaces";
-import { updateDeviceStatus } from "@/lib/FirebaseCollection";
 import { Timestamp } from "@firebase/firestore";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 export class Bulb implements IDevice {
   name: string;
@@ -30,7 +27,7 @@ export class Bulb implements IDevice {
     this.manufacturer = device.manufacturer;
     this.cost = device.cost;
 
-    this.status = device.status || Status.OFF;
+    this.status = device.status;
     this.preTimestamp = device.preTimestamp;
     this.postTimestamp = device.postTimestamp;
     this.powerConsumption = device.powerConsumption;

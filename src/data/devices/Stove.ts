@@ -22,13 +22,13 @@ export class Stove implements IDevice {
 
   constructor(device: IDevice) {
     this.name = device.name;
-    this.type = parseDeviceType(DeviceType.Bulb);
+    this.type = parseDeviceType(DeviceType.Stove);
     this.idDevice = device.idDevice;
     this.roomId = device.roomId;
     this.manufacturer = device.manufacturer;
     this.cost = device.cost;
 
-    this.status = device.status || Status.OFF;
+    this.status = device.status;
     this.preTimestamp = device.preTimestamp;
     this.postTimestamp = device.postTimestamp;
     this.powerConsumption = device.powerConsumption;

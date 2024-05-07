@@ -32,7 +32,7 @@ export class Thermostat implements IDevice {
     this.roomId = device.roomId;
     this.manufacturer = device.manufacturer;
     this.cost = device.cost;
-    this.status = device.status || Status.OFF;
+    this.status = device.status;
     this.preTimestamp = device.preTimestamp;
     this.postTimestamp = device.postTimestamp;
     this.powerConsumption = device.powerConsumption;
