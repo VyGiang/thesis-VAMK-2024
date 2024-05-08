@@ -20,6 +20,9 @@ const LeftSidebar = () => {
   const navigateToStatictics = () => {
     navigate("/statictics")
   }
+  const navigateToSetting = () => {
+    navigate("/setting")
+  }
   const handleLogout = () => {
     logout()
     navigate("/")
@@ -82,16 +85,18 @@ const LeftSidebar = () => {
               <strong className=" pl-3 text-xl">Dashboard</strong>
             </div>
           </div>
+
           {/* Rooms */}
           <div
             className="px-10 py-5 inline-flex hover:bg-[#EBF5FF]  dark:hover:bg-[#777a7c] items-center cursor-pointer"
             onClick={navigateToRooms}
           >
             <div className="inline-flex transform duration-500 hover:scale-110 items-center">
-              <img src="/images/door.png" alt="dashboard" className="w-3/12" />
+              <img src="/images/door.png" alt="room" className="w-3/12" />
               <strong className="pl-3 text-xl">Rooms</strong>
             </div>
           </div>
+
           {/* Devices */}
           <div
             className="px-10 py-5 inline-flex hover:bg-[#EBF5FF]  dark:hover:bg-[#777a7c] items-center cursor-pointer"
@@ -100,12 +105,13 @@ const LeftSidebar = () => {
             <div className="inline-flex transform duration-500 hover:scale-110 items-center">
               <img
                 src="/images/device.png"
-                alt="dashboard"
+                alt="device"
                 className="w-3/12"
               ></img>
               <strong className=" pl-3 text-xl">Devices</strong>
             </div>
           </div>
+
           {/* Statistics */}
           <div
             className=" px-10 py-5 inline-flex hover:bg-[#EBF5FF]  dark:hover:bg-[#777a7c] items-center cursor-pointer"
@@ -118,6 +124,21 @@ const LeftSidebar = () => {
                 className="w-3/12"
               ></img>
               <strong className="pl-3 text-xl">Statistics</strong>
+            </div>
+          </div>
+
+          {/* Setting */}
+          <div
+            className=" px-10 py-5 inline-flex hover:bg-[#EBF5FF]  dark:hover:bg-[#777a7c] items-center cursor-pointer"
+            onClick={navigateToSetting}
+          >
+            <div className="inline-flex transform duration-500 hover:scale-110 items-center">
+              <img
+                src="/images/setting.png"
+                alt="dashboard"
+                className="w-6/12"
+              ></img>
+              <strong className="pl-4 pr-9 text-xl">Setting</strong>
             </div>
           </div>
         </div>

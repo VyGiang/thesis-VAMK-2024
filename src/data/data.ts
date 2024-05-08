@@ -1,4 +1,4 @@
-import { Timestamp } from "firebase/firestore";
+import { Timestamp } from "firebase/firestore"
 import {
   IUserLogin,
   IDevice,
@@ -9,12 +9,12 @@ import {
   parseDeviceType,
   Relationship,
   IFamilyMember,
-} from "../lib/DataInterfaces";
-import { Bulb } from "./devices/Bulb";
-import { AirCondition } from "./devices/AC";
-import { FamilyMember } from "./family/FamilyMember";
-import { Stove } from "./devices/Stove";
-import { Thermostat } from "./devices/Thermostat";
+} from "../lib/DataInterfaces"
+import { Bulb } from "./devices/Bulb"
+import { AirCondition } from "./devices/AC"
+import { FamilyMember } from "./family/FamilyMember"
+import { Stove } from "./devices/Stove"
+import { Thermostat } from "./devices/Thermostat"
 
 // Dummy Users
 export const users: IUserLogin[] = [
@@ -30,7 +30,7 @@ export const users: IUserLogin[] = [
     timestamp: Timestamp.now(),
     avatar: "https://example.com/avatar2.jpg",
   },
-];
+]
 
 // Dummy Devices
 export const devices: IDevice[] = [
@@ -98,7 +98,7 @@ export const devices: IDevice[] = [
     postTimestamp: Timestamp.fromDate(new Date("2024-03-02T10:00:00Z")), // Adjusted date for variety
     powerConsumption: 0.6, // Slight change for variety
   }),
-];
+]
 
 // Family Members
 export const fams: IFamilyMember[] = [
@@ -109,7 +109,7 @@ export const fams: IFamilyMember[] = [
     relationship: Relationship.Parent,
     avatarUrl: "https://example.com/avatar/john.jpg",
   }),
-];
+]
 
 // Dummy Rooms
 export const rooms: IRoom[] = [
@@ -118,11 +118,31 @@ export const rooms: IRoom[] = [
     roomId: 1,
     ownerId: "1",
     isPrivate: false,
+    icon: "/images/living.png",
+    color: "bg-pink-100",
   },
   {
     name: "Kitchen",
     roomId: 2,
     ownerId: "2",
     isPrivate: false,
+    icon: "/images/kitchen.png",
+    color: "bg-blue-100",
   },
-];
+  {
+    name: "Bedroom",
+    roomId: 3,
+    ownerId: "3",
+    isPrivate: false,
+    icon: "/images/bed.png",
+    color: "bg-green-100",
+  },
+  {
+    name: "Bathroom",
+    roomId: 4,
+    ownerId: "4",
+    isPrivate: false,
+    icon: "/images/bath.png",
+    color: "bg-yellow-100",
+  },
+]

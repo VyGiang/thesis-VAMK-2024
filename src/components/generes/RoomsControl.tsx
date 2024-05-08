@@ -1,11 +1,61 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Navbar from "./Navbar"
 import { useNavigate } from "react-router-dom"
 import CurrentTime from "./CurrentTime"
 import { FaPlus } from "react-icons/fa"
-import AddDeviceForm from "./AddDeviceForm"
+import AddRoomForm from "./AddRoomForm"
+import {
+  addFamilyMembersToFirestore,
+  addRoomToUser,
+  addRoomsToFirestore,
+  deleteRoomFromUser,
+  getAllRoomsFromUser,
+} from "@/lib/FirebaseCollection"
+import { IRoom, RoomType, getRoomIcon } from "@/lib/DataInterfaces"
+import { auth } from "@/firebase"
 
-const RoomsControl = () => {
+const RoomsControl: React.FC = () => {
+  const userId = auth.currentUser?.uid ?? ""
+
+  const [localRooms, setLocalRooms] = useState<IRoom[]>([])
+
+  const fetchData = async () => {
+    // Fetch s from Firestore and update the state
+    const fetchedRooms = await getAllRoomsFromUser(userId)
+    setLocalRooms(fetchedRooms as IRoom[])
+  }
+
+  const handleAddRoom = async (room: {
+    name: string
+    color: string
+    type: RoomType
+  }) => {
+    try {
+      await addRoomToUser(userId, 7, {
+        name: room.name,
+        roomId: 7,
+        ownerId: "test",
+        isPrivate: false,
+        icon: getRoomIcon(room.type),
+        color: room.color,
+      })
+      fetchData() // Reload or refetch room data
+    } catch (error) {
+      console.error("Error adding room:", error)
+    }
+  }
+
+  const handleDeleteRoom = async (roomId: number) => {
+    await deleteRoomFromUser(userId, roomId)
+    setLocalRooms((prevRooms) =>
+      prevRooms.filter((room) => room.roomId !== roomId)
+    )
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [userId])
+
   const navigate = useNavigate()
 
   const navigateToLivingRoom = () => {
@@ -21,6 +71,13 @@ const RoomsControl = () => {
     navigate("/rooms/kitchen")
   }
   const [isFormOpen, setIsFormOpen] = useState(false)
+
+  const [rooms, setRooms] = useState<string[]>([])
+
+  const addRoom = (name: string) => {
+    setRooms([...rooms, name])
+  }
+
   return (
     <div>
       <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-5">
@@ -35,58 +92,24 @@ const RoomsControl = () => {
           <h1 className="lg:text-5xl  sm:text-lg md:text-lg font-bold mb-3">
             Rooms
           </h1>
-          {/* Living room*/}
-          <div
-            className="bg-white p-3 rounded-2xl flex items-center mb-5 dark:bg-[#1d1d1f] transform duration-500 hover:scale-105"
-            onClick={navigateToLivingRoom}
-          >
-            <div className="flex h-20 w-20 shrink-0 grow-0 items-center justify-center rounded-full bg-pink-100 shadow-md shadow-slate-500">
-              <img src="/images/living.png" alt="temp" className="w-5/12"></img>
-            </div>
-            <span className=" lg:text-xl  sm:text-lg md:text-lg font-bold pl-5">
-              Living Room
-            </span>
-          </div>
-          {/* Bed room*/}
-          <div
-            className="bg-white p-3 rounded-2xl flex items-center mb-5 dark:bg-[#1d1d1f] transform duration-500 hover:scale-105"
-            onClick={navigateToBedRoom}
-          >
-            <div className="flex h-20 w-20 shrink-0 grow-0 items-center justify-center rounded-full bg-green-100 shadow-md shadow-slate-500">
-              <img src="/images/bed.png" alt="temp" className="w-5/12"></img>
-            </div>
-            <span className=" lg:text-xl  sm:text-lg md:text-lg font-bold pl-5">
-              Bed Room
-            </span>
-          </div>
-          {/* Bath room*/}
-          <div
-            className="bg-white p-3 rounded-2xl flex items-center mb-5 dark:bg-[#1d1d1f] transform duration-500 hover:scale-105"
-            onClick={navigateToBathRoom}
-          >
-            <div className="flex h-20 w-20 shrink-0 grow-0 items-center justify-center rounded-full bg-yellow-100 shadow-md shadow-slate-500">
-              <img src="/images/bath.png" alt="temp" className="w-5/12"></img>
-            </div>
-            <span className=" lg:text-xl  sm:text-lg md:text-lg font-bold pl-5">
-              Bath Room
-            </span>
-          </div>
-          {/* Kitchen*/}
-          <div
-            className="bg-white p-3 rounded-2xl flex items-center mb-5 dark:bg-[#1d1d1f] transform duration-500 hover:scale-105"
-            onClick={navigateToKitchen}
-          >
-            <div className="flex h-20 w-20 shrink-0 grow-0 items-center justify-center rounded-full bg-blue-100 shadow-md shadow-slate-500">
-              <img
-                src="/images/kitchen.png"
-                alt="temp"
-                className="w-5/12"
-              ></img>
-            </div>
-            <span className=" lg:text-xl  sm:text-lg md:text-lg font-bold pl-5">
-              Kitchen
-            </span>
-          </div>
+          {/* Dynamically render rooms */}
+          {localRooms.map((room) => (
+            <React.Fragment key={room.roomId}>
+              <div
+                className="bg-white p-3 rounded-2xl flex items-center mb-5 dark:bg-[#1d1d1f] transform duration-500 hover:scale-105"
+                onClick={() => navigateToKitchen()}
+              >
+                <div
+                  className={`flex h-20 w-20 shrink-0 grow-0 items-center justify-center rounded-full ${room.color} shadow-md shadow-slate-500`}
+                >
+                  <img src={room.icon} alt={room.name} className="w-5/12"></img>
+                </div>
+                <span className=" lg:text-xl  sm:text-lg md:text-lg font-bold pl-5">
+                  {room.name}
+                </span>
+              </div>
+            </React.Fragment>
+          ))}
           {/* Add room*/}
           <div className="bg-white p-3 rounded-2xl flex items-center mb-5 dark:bg-[#1d1d1f] transform duration-500 hover:scale-105">
             <button
@@ -99,9 +122,13 @@ const RoomsControl = () => {
               Add Room
             </span>
           </div>
+          <AddRoomForm
+            isOpen={isFormOpen}
+            setIsOpen={setIsFormOpen}
+            submitForm={handleAddRoom}
+          />
         </div>
       </div>
-      <AddDeviceForm isOpen={isFormOpen} setIsOpen={setIsFormOpen} />
     </div>
   )
 }

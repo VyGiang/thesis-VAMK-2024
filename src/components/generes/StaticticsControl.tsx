@@ -23,58 +23,58 @@
 // Todo: Add error handling. Like global error handling. This will be displayed in the UI
 // on top right corner?
 
-import React, { useEffect, useState } from "react";
-import Navbar from "./Navbar";
-import { auth } from "@/firebase";
-import OnOffButton from "../buttons/OnOffButton";
+import React, { useEffect, useState } from "react"
+import Navbar from "./Navbar"
+import { auth } from "@/firebase"
+import OnOffButton from "../buttons/OnOffButton"
 import {
   addDevicesToFirestore,
   addFamilyMembersToFirestore,
   addRoomsToFirestore,
   deleteDeviceFromUser,
   getAllDevicesFromUser,
-} from "@/lib/FirebaseCollection";
-import ActionButton from "../buttons/ActionButton";
-import { FaMinus, FaPlus } from "react-icons/fa";
-import { IDevice } from "@/lib/DataInterfaces";
+} from "@/lib/FirebaseCollection"
+import ActionButton from "../buttons/ActionButton"
+import { FaMinus, FaPlus } from "react-icons/fa"
+import { IDevice } from "@/lib/DataInterfaces"
 
 const StaticControl: React.FC = () => {
-  const [localDevices, setLocalDevices] = useState<IDevice[]>([]);
-  const userId = auth.currentUser?.uid ?? "";
+  const [localDevices, setLocalDevices] = useState<IDevice[]>([])
+  const userId = auth.currentUser?.uid ?? ""
 
   const fetchData = async () => {
     // Fetch devices from Firestore and update the state
-    const fetchedDevices = await getAllDevicesFromUser(userId);
-    setLocalDevices(fetchedDevices as IDevice[]);
-  };
+    const fetchedDevices = await getAllDevicesFromUser(userId)
+    setLocalDevices(fetchedDevices as IDevice[])
+  }
 
   const handleDeleteDevice = async (deviceId: number) => {
     if (window.confirm("Are you sure you want to delete this device?")) {
-      await deleteDeviceFromUser(userId, deviceId);
+      await deleteDeviceFromUser(userId, deviceId)
       setLocalDevices((prevDevices) =>
         prevDevices.filter((device) => device.idDevice !== deviceId)
-      );
+      )
     }
-  };
+  }
 
   const handleAddDevice = async () => {
-    await addDevicesToFirestore();
-    fetchData();
-  };
+    await addDevicesToFirestore()
+    fetchData()
+  }
 
   const handleAddFamilyMember = async () => {
-    await addFamilyMembersToFirestore();
-    fetchData();
-  };
+    await addFamilyMembersToFirestore()
+    fetchData()
+  }
 
   const handleAddRoom = async () => {
-    await addRoomsToFirestore();
-    fetchData();
-  };
+    await addRoomsToFirestore()
+    fetchData()
+  }
 
   useEffect(() => {
-    fetchData();
-  }, [userId]);
+    fetchData()
+  }, [userId])
 
   return (
     <div>
@@ -141,7 +141,7 @@ const StaticControl: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default StaticControl;
+export default StaticControl
