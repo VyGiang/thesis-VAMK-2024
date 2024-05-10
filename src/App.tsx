@@ -1,9 +1,9 @@
-import React from "react"
-import { BrowserRouter as Router } from "react-router-dom"
-import AuthWrapper from "./components/auth/AuthWrapper"
-import { RenderRoutes } from "./lib/RenderNavigation"
-import { DarkModeProvider } from "./components/generes/DarkModeContext"
-// Import DarkModeProvider
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import AuthWrapper from "./components/auth/AuthWrapper";
+import { RenderRoutes } from "./lib/RenderNavigation";
+import { DarkModeProvider } from "./components/generes/DarkModeContext";
+import withErrorBoundary from "./error_handling/WrapperErrorBoundary";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         </Router>
       </div>
     </DarkModeProvider>
-  )
+  );
 }
 
-export default App
+export default withErrorBoundary(App);
