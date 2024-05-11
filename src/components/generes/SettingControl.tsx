@@ -1,7 +1,6 @@
 import Navbar from "./Navbar"
 import { useNavigate } from "react-router-dom"
 import CurrentTime from "./CurrentTime"
-import { GiMoon } from "react-icons/gi"
 import DarkModeToggle from "./DartModeToggle"
 
 const SettingControl = () => {
@@ -31,7 +30,7 @@ const SettingControl = () => {
 
         {/* main*/}
         <div className=" bg-[#F0F0F0] sm:col-span-1 md:col-span-1 lg:col-span-2 rounded-xl p-10 dark:bg-[#66676d]">
-          <h1 className="lg:text-5xl  sm:text-lg md:text-lg font-bold mb-3">
+          <h1 className="lg:text-5xl  sm:text-lg md:text-lg font-bold mb-10">
             Setting
           </h1>
           {/* User Detail*/}
@@ -84,7 +83,7 @@ const SettingControl = () => {
           </div>
 
           {/* Dart Mode */}
-          <div className="bg-white p-3 rounded-2xl flex items-center mb-5 dark:bg-[#1d1d1f] transform duration-500 hover:scale-105">
+          <div className="bg-white p-3 rounded-2xl flex items-center mb-10 dark:bg-[#1d1d1f] transform duration-500 hover:scale-105">
             <div className="flex h-20 w-20 shrink-0 grow-0 items-center justify-center rounded-full bg-gray-200 shadow-md shadow-slate-500">
               <img src="/images/moon.png" alt="temp" className="w-7/12"></img>
             </div>

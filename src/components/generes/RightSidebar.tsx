@@ -14,12 +14,7 @@ const RightSidebar = () => {
             className="hidden"
             id="avatarInput"
           />
-          <label
-            htmlFor="avatarInput"
-            className="cursor-pointer text-blue-600 hover:text-blue-800 transition duration-200"
-          >
-            Change Avatar
-          </label>
+
           <h2 className="text-lg font-semibold">Welcome Vivian!</h2>
         </div>
         {/* <!-- Calendar Section --> */}

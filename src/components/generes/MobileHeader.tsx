@@ -68,12 +68,7 @@ const MobileHeader = () => {
           />
           <div className="ml-3">
             <h2 className="text-lg font-semibold">Welcome Vivian!</h2>
-            <label
-              htmlFor="avatarInput"
-              className="cursor-pointer text-blue-600 hover:text-blue-800 transition duration-200 dark:text-yellow-600"
-            >
-              Change Avatar
-            </label>
+
             <input
               type="file"
               accept="image/*"

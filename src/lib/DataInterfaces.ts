@@ -1,11 +1,11 @@
 import { Timestamp } from "firebase/firestore"
 
 export enum Relationship {
-  Parent,
-  Child,
-  Spouse,
-  Sibling,
-  Other,
+  Parent = "Parent",
+  Child = "Child",
+  Spouse = "Spouse",
+  Sibling = "Sibling",
+  Other = "Other",
 }
 
 export enum RoomType {
@@ -15,41 +15,27 @@ export enum RoomType {
   Bathroom = "Bathroom",
 }
 export enum DeviceType {
-  UNKNOWN = -1,
-  Thermostat,
-  Bulb,
-  Plug,
-  AirCondition,
-  Stove,
+  UNKNOWN = "Unknown",
+  Thermostat = "Thermostat",
+  Bulb = "Bulb",
+  Plug = "Plug",
+  AirCondition = "AC",
+  Stove = "Stove",
 }
-
-export const parseDeviceType = (type: number): string => {
+export const getDeviceIcon = (type: DeviceType): string => {
   switch (type) {
     case DeviceType.Thermostat:
-      return "Thermostat"
+      return "/images/thermostat.png"
     case DeviceType.Bulb:
-      return "Bulb"
+      return "/images/bulb.png"
     case DeviceType.Plug:
-      return "Plug"
+      return "/images/plug.png"
     case DeviceType.AirCondition:
-      return "Air Condition"
+      return "/images/ac.png"
     case DeviceType.Stove:
-      return "Stove"
+      return "/images/Stove.png"
     default:
-      return "Unknown"
-  }
-}
-
-export const parseDeviceStatus = (status: Status): string => {
-  switch (status) {
-    case Status.ON:
-      return "ON"
-    case Status.OFF:
-      return "OFF"
-    case Status.BROKEN:
-      return "BROKEN"
-    default:
-      return "Unknown"
+      return "🏠"
   }
 }
 
@@ -69,21 +55,21 @@ export const getRoomIcon = (type: RoomType): string => {
 }
 
 export enum Status {
-  ON,
-  OFF,
-  BROKEN,
+  OFF = "OFF",
+  ON = "ON",
+  BROKEN = "BROKEN",
 }
 
 export enum Manufacturer {
-  Bosch,
-  Philips,
-  Samsung,
-  Sony,
-  LG,
-  Xiaomi,
-  Apple,
-  Microsoft,
-  TpLink,
+  Bosch = "Bosch",
+  Philips = "Philips",
+  Samsung = "Samsung",
+  Sony = "Sony",
+  LG = "LG",
+  Xiaomi = "Xiaomi",
+  Apple = "Apple",
+  Microsoft = "Microsoft",
+  TpLink = "Tp-Link",
 }
 
 export interface IUserLogin {
@@ -95,18 +81,19 @@ export interface IUserLogin {
 
 export interface IDevice {
   name: string
-  type: string
+  type: DeviceType
   idDevice: number
   roomId: number
   manufacturer: Manufacturer
   status: Status
   cost: number
-  preTimestamp: Timestamp
-  postTimestamp: Timestamp
+  preTimestamp?: Timestamp
+  postTimestamp?: Timestamp
   powerConsumption: number // in kWh
   temperatureSetting?: number
   currentTemperature?: number
   targetTemperature?: number
+  icon: string
 
   // // Specific functions
   // getStatus(): number | undefined;
@@ -122,6 +109,7 @@ export interface IRoom {
   isPrivate?: boolean
   icon: string
   color: string
+  type: RoomType
 }
 
 export interface IFamilyMember {

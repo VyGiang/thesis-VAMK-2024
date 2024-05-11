@@ -8,20 +8,6 @@ const Avatar = () => {
         <div className="flex items-center justify-center h-full">
           {/* Placeholder or icon if no image has been selected */}
           <RxAvatar size={120} />
-          {/* <svg
-            className="w-12 h-12 bg-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="file:///C:/Users/admin/Desktop/thesis-VAMK-2024/src/assets/avatar.svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M5.121 11.121a1.5 1.5 0 01.327 1.991L5.12 13.12m.877-8.48a1.5 1.5 0 011.99.326l.003.004m14.003 14.004a1.5 1.5 0 01-2.121 0l-.003-.003m0 0a1.5 1.5 0 010-2.121l.003-.003m0 0L16 12m0 0l-4-4m4 4H4m12 0l4 4"
-            ></path>
-          </svg> */}
         </div>
       </div>
       <input type="file" accept="image/*" className="hidden" id="avatarInput" />

@@ -9,7 +9,7 @@ import {
   collection,
   deleteDoc,
 } from "firebase/firestore"
-import { IDevice, Status, parseDeviceStatus } from "./DataInterfaces"
+import { IDevice, IRoom, Status } from "./DataInterfaces"
 import { devices, fams, rooms } from "@/data/data"
 
 /********************************************************* ADD *********************************************************/
@@ -100,11 +100,29 @@ export const addRoomToUser = async (
   roomId: number,
   roomData: object
 ) => {
-  const roomDocRef = doc(db, "users", userId, "rooms", roomId.toString())
-  await setDoc(roomDocRef, {
-    ...roomData,
+  try {
+    const roomDocRef = doc(db, "users", userId, "rooms", roomId.toString())
+    await setDoc(roomDocRef, {
+      ...roomData,
+    })
+    console.log(`Room ${roomId} added to user ${userId} successfully.`)
+  } catch (error) {
+    console.error("Error adding room to user: ", error)
+  }
+}
+// Function to add a single device to a user's 'devices' subcollection
+export const addDeviceToUser = async (
+  userId: string,
+  deviceId: number,
+  deviceData: IDevice
+) => {
+  const deviceDocRef = doc(db, "users", userId, "devices", `device_${deviceId}`)
+  await setDoc(deviceDocRef, {
+    ...deviceData,
+    preTimestamp: Timestamp.fromDate(new Date()),
+    postTimestamp: Timestamp.fromDate(new Date()),
   })
-  console.log(`Room ${roomId} added to user ${userId} successfully.`)
+  console.log(`Device ${deviceId} added to user ${userId} successfully.`)
 }
 
 /********************************************************* UPDATE *********************************************************/
@@ -121,18 +139,35 @@ export const updateDeviceStatus = async (userId: string, deviceId: number) => {
 
   // Determine the new status
   const currentStatus = docSnap.data().status
-  const newStatus = currentStatus === Status.ON ? Status.OFF : Status.ON
+  const newStatus = currentStatus === Status.OFF ? Status.ON : Status.OFF
 
   await updateDoc(deviceDocRef, {
     status: newStatus,
   })
   console.log(
     `Device status for device_${deviceId} updated to ${
-      newStatus ? parseDeviceStatus(Status.ON) : parseDeviceStatus(Status.OFF)
+      newStatus == Status.OFF ? Status.OFF : Status.ON
     }.`
   )
 }
 
+//Update room to user
+export const updateRoomToUser = async (
+  userId: string,
+  roomId: number,
+  roomData: IRoom
+) => {
+  try {
+    const roomDocRef = doc(db, "users", userId, "rooms", roomId.toString())
+    await setDoc(roomDocRef, {
+      ...roomData,
+      timestamp: Timestamp.now(),
+    })
+    console.log(`Room ${roomId} updated successfully for user ${userId}.`)
+  } catch (error) {
+    console.error("Error updating room:", error)
+  }
+}
 /********************************************************* READ *********************************************************/
 
 export const getAllDevicesFromUser = async (userId: string) => {

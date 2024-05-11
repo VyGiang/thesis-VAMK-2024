@@ -1,21 +1,35 @@
-// FormWithFloatingLabels.tsx
-import { RoomType } from "@/lib/DataInterfaces"
-import React, { useState } from "react"
+// UpdateRoomForm.tsx
+import React, { useEffect, useState } from "react"
+import { IRoom, RoomType } from "@/lib/DataInterfaces"
 
 interface Props {
   isOpen: boolean
+  room: IRoom | null
   setIsOpen: (isOpen: boolean) => void
-  submitForm: (roomData: {
+  updateRoom: (roomData: {
     name: string
     color: string
     type: RoomType
   }) => void
 }
 
-const AddRoomForm: React.FC<Props> = ({ isOpen, setIsOpen, submitForm }) => {
+const UpdateRoomForm: React.FC<Props> = ({
+  isOpen,
+  room,
+  setIsOpen,
+  updateRoom,
+}) => {
   const [roomName, setRoomName] = useState("")
   const [roomColor, setRoomColor] = useState("")
   const [roomType, setRoomType] = useState<RoomType | "">(RoomType.LivingRoom)
+
+  useEffect(() => {
+    if (room) {
+      setRoomName(room.name)
+      setRoomColor(room.color)
+      setRoomType(room.type)
+    }
+  }, [room])
 
   // Apply the overlay style conditionally based on isOpen
   const overlayStyle = isOpen
@@ -42,15 +56,12 @@ const AddRoomForm: React.FC<Props> = ({ isOpen, setIsOpen, submitForm }) => {
 
   const handleFormSubmit = () => {
     if (roomName.trim() !== "" && roomColor && roomType) {
-      submitForm({
+      updateRoom({
         name: roomName,
         color: roomColor,
         type: roomType,
       })
       setIsOpen(false)
-      setRoomName("")
-      setRoomColor("")
-      setRoomType(RoomType.LivingRoom) // Reset to default or consider using a specific initial state
     }
   }
 
@@ -64,7 +75,7 @@ const AddRoomForm: React.FC<Props> = ({ isOpen, setIsOpen, submitForm }) => {
         className="w-full px-4 py-6 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-2xl mx-auto bg-white border-0 shadow-lg sm:rounded-3xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <h1 className="text-2xl font-bold mb-8">Add Room</h1>
+        <h1 className="text-2xl font-bold mb-8">Update Room</h1>
         <form id="form" noValidate>
           <div className="relative z-0 w-full mb-5">
             <input
@@ -88,6 +99,10 @@ const AddRoomForm: React.FC<Props> = ({ isOpen, setIsOpen, submitForm }) => {
               <option value="" disabled hidden>
                 Select a color
               </option>
+              <option value="bg-pink-100">Pink</option>
+              <option value="bg-blue-100">Blue</option>
+              <option value="bg-green-100">Green</option>
+              <option value="bg-yellow-100">Yellow</option>
               <option value="bg-purple-200">Purple</option>
               <option value="bg-rose-200">Rose</option>
               <option value="bg-indigo-200">Indigo</option>
@@ -125,7 +140,7 @@ const AddRoomForm: React.FC<Props> = ({ isOpen, setIsOpen, submitForm }) => {
             className="w-full px-6 py-3 mt-3 text-lg text-white rounded-lg shadow bg-pink-500 hover:bg-pink-600 focus:outline-none"
             onClick={handleFormSubmit}
           >
-            Add Room
+            Update Room
           </button>
         </form>
       </div>
@@ -133,4 +148,4 @@ const AddRoomForm: React.FC<Props> = ({ isOpen, setIsOpen, submitForm }) => {
   )
 }
 
-export default AddRoomForm
+export default UpdateRoomForm

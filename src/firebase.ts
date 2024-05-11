@@ -1,9 +1,10 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getDatabase } from "firebase/database";
+import { initializeApp } from "firebase/app"
+import { getAnalytics } from "firebase/analytics"
+import { getAuth } from "firebase/auth"
+import { getFirestore } from "firebase/firestore"
+import { getDatabase } from "firebase/database"
+import { get } from "http"
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -20,13 +21,13 @@ const firebaseConfig = {
   measurementId: "G-QYQ73N2T2X",
   databaseURL:
     "https://home-assistant-11da9-default-rtdb.europe-west1.firebasedatabase.app/",
-};
+}
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const app = initializeApp(firebaseConfig)
+const analytics = getAnalytics(app)
 
 // Initialize Firebase Authentication and get a reference to the service
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const rt = getDatabase(app);
+export const auth = getAuth(app)
+export const db = getFirestore(app)
+export const rt = getDatabase(app)
