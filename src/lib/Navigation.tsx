@@ -1,23 +1,26 @@
-import Rooms from "@/components/pages/Rooms"
-import Devices from "@/components/pages/Devices"
-import LoginPage from "@/components/pages/LoginPage"
-import DashBoard from "@/components/pages/DashBoard"
-import Statictics from "@/components/pages/Statictics"
-import LivingRoom from "@/components/pages/LivingRoom"
-import BathRoom from "@/components/pages/BathRoom"
-import BedRoom from "@/components/pages/BedRoom"
-import Kitchen from "@/components/pages/Kitchen"
-import Setting from "@/components/pages/Setting"
-import UserDetail from "@/components/pages/UserDetail "
-import ManageRoom from "@/components/pages/ManageRoom"
-import ManageDevices from "@/components/pages/ManageDevices"
-import FamilyMemberDetail from "@/components/pages/FamilyMemberDetail"
+import Rooms from "@/components/pages/Rooms";
+import Devices from "@/components/pages/Devices";
+import LoginPage from "@/components/pages/LoginPage";
+import DashBoard from "@/components/pages/DashBoard";
+import Statictics from "@/components/pages/Statictics";
+import Setting from "@/components/pages/Setting";
+import UserDetail from "@/components/pages/UserDetail ";
+import ManageRoom from "@/components/pages/ManageRoom";
+import ManageDevices from "@/components/pages/ManageDevices";
+import FamilyMemberDetail from "@/components/pages/FamilyMemberDetail";
+import RoomDevices from "@/components/generes/RoomDevices";
 
 export const nav = [
   {
     path: "/rooms",
     name: "Rooms",
     element: <Rooms />,
+    isPrivate: true,
+  },
+  {
+    path: "/rooms/:roomId",
+    name: "Room Details",
+    element: <RoomDevices />,
     isPrivate: true,
   },
   {
@@ -37,30 +40,6 @@ export const nav = [
     name: "Login",
     element: <LoginPage />,
     isPrivate: false,
-  },
-  {
-    path: "/rooms/livingRoom",
-    name: "livingRoom",
-    element: <LivingRoom />,
-    isPrivate: true,
-  },
-  {
-    path: "rooms/bathRoom",
-    name: "bathRoom",
-    element: <BathRoom />,
-    isPrivate: true,
-  },
-  {
-    path: "rooms/bedRoom",
-    name: "bedRoom",
-    element: <BedRoom />,
-    isPrivate: true,
-  },
-  {
-    path: "rooms/kitchen",
-    name: "kitchen",
-    element: <Kitchen />,
-    isPrivate: true,
   },
   {
     path: "/statictics",
@@ -105,4 +84,4 @@ export const nav = [
     element: <FamilyMemberDetail />,
     isPrivate: true,
   },
-]
+];

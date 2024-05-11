@@ -1,40 +1,30 @@
-import React, { useEffect, useState } from "react"
-import Navbar from "./Navbar"
-import { useNavigate } from "react-router-dom"
-import CurrentTime from "./CurrentTime"
-import { getAllRoomsFromUser } from "@/lib/FirebaseCollection"
-import { IRoom } from "@/lib/DataInterfaces"
-import { auth } from "@/firebase"
+import React, { useEffect, useState } from "react";
+import Navbar from "./Navbar";
+import { useNavigate } from "react-router-dom";
+import CurrentTime from "./CurrentTime";
+import { getAllRoomsFromUser } from "@/lib/FirebaseCollection";
+import { IRoom } from "@/lib/DataInterfaces";
+import { auth } from "@/firebase";
 
 const RoomsControl: React.FC = () => {
-  const userId = auth.currentUser?.uid ?? ""
+  const userId = auth.currentUser?.uid ?? "";
+  const navigate = useNavigate();
 
-  const [localRooms, setLocalRooms] = useState<IRoom[]>([])
+  const [localRooms, setLocalRooms] = useState<IRoom[]>([]);
 
   const fetchData = async () => {
     // Fetch s from Firestore and update the state
-    const fetchedRooms = await getAllRoomsFromUser(userId)
-    setLocalRooms(fetchedRooms as IRoom[])
-  }
+    const fetchedRooms = await getAllRoomsFromUser(userId);
+    setLocalRooms(fetchedRooms as IRoom[]);
+  };
+
+  const handleRoomClick = (roomId: number) => {
+    navigate(`/rooms/${roomId}`); // Navigates to the room details page
+  };
 
   useEffect(() => {
-    fetchData()
-  }, [userId])
-
-  const navigate = useNavigate()
-
-  const navigateToLivingRoom = () => {
-    navigate("/rooms/livingRoom")
-  }
-  const navigateToBedRoom = () => {
-    navigate("/rooms/bedRoom")
-  }
-  const navigateToBathRoom = () => {
-    navigate("/rooms/bathRoom")
-  }
-  const navigateToKitchen = () => {
-    navigate("/rooms/kitchen")
-  }
+    fetchData();
+  }, [userId]);
 
   return (
     <div>
@@ -55,7 +45,7 @@ const RoomsControl: React.FC = () => {
             <React.Fragment key={room.roomId}>
               <div
                 className="bg-white p-3 rounded-2xl flex items-center mb-5 dark:bg-[#1d1d1f] transform duration-500 hover:scale-105"
-                onClick={() => navigateToKitchen()}
+                onClick={() => handleRoomClick(room.roomId)}
               >
                 <div
                   className={`flex h-20 w-20 shrink-0 grow-0 items-center justify-center rounded-full ${room.color} shadow-md shadow-slate-500`}
@@ -71,7 +61,7 @@ const RoomsControl: React.FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RoomsControl
+export default RoomsControl;
