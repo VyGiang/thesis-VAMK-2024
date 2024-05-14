@@ -15,7 +15,7 @@ interface Props {
 const AddRoomForm: React.FC<Props> = ({ isOpen, setIsOpen, submitForm }) => {
   const [roomName, setRoomName] = useState("")
   const [roomColor, setRoomColor] = useState("")
-  const [roomType, setRoomType] = useState<RoomType | "">(RoomType.LivingRoom)
+  const [roomType, setRoomType] = useState<RoomType | "">()
 
   // Apply the overlay style conditionally based on isOpen
   const overlayStyle = isOpen

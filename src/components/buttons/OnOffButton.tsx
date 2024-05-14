@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { db } from "@/firebase"
-import { doc, getDoc } from "firebase/firestore"
-import { updateDeviceStatus } from "@/lib/FirebaseCollection"
+import { doc, getDoc, updateDoc } from "firebase/firestore"
+import { updateDeviceStatus, updateDeviceUsage } from "@/lib/FirebaseCollection"
 import { Status } from "@/lib/DataInterfaces"
 
 const OnOffButton = ({ userId, deviceId }) => {
@@ -19,7 +19,7 @@ const OnOffButton = ({ userId, deviceId }) => {
       )
       const docSnap = await getDoc(deviceRef)
       if (docSnap.exists() && docSnap.data().status !== undefined) {
-        setIsOn(docSnap.data().status === Status.OFF)
+        setIsOn(docSnap.data().status === Status.ON)
       }
     }
 
@@ -27,34 +27,32 @@ const OnOffButton = ({ userId, deviceId }) => {
   }, [userId, deviceId])
 
   const toggle = async () => {
-    const newStatus = isOn ? Status.OFF : Status.ON
-    setIsOn(!isOn)
-
     try {
-      // Call Firestore to update the status
-      await updateDeviceStatus(userId, deviceId)
+      const newStatus = isOn ? Status.OFF : Status.ON
+      await updateDeviceUsage(userId, deviceId, newStatus)
+      setIsOn(!isOn)
     } catch (error) {
       console.error("Failed to update device status:", error)
       // Optionally revert the UI toggle if the Firestore update fails
-      setIsOn(!newStatus)
+      setIsOn(isOn)
     }
   }
 
   return (
     <button
       onClick={toggle}
-      className={`w-20 h-10 flex items-center rounded-full p-1 m-2 transition-colors ${
-        isOn ? "bg-pink-200" : "bg-blue-200"
+      className={`lg:w-20 lg:h-10 sm:w-16 sm:h-6 flex items-center rounded-full p-1 m-2 transition-colors ${
+        isOn ? "bg-blue-200" : "bg-red-200"
       }`}
     >
       {/* The toggle switch */}
       <div
-        className={`w-8 h-8 rounded-full shadow-md transform duration-300 ease-in-out ${
-          isOn ? "translate-x-0 bg-red-400" : "translate-x-10 bg-blue-400"
+        className={`lg:w-8 lg:h-8 sm:w-6 rounded-full shadow-md transform duration-300 ease-in-out ${
+          isOn ? "translate-x-10 bg-blue-400" : "translate-x-0 bg-red-400"
         }`}
       >
         <span className="flex items-center justify-center h-full text-sm text-gray-700">
-          {isOn ? "Off" : "On"}
+          {isOn ? "On" : "Off"}
         </span>
       </div>
     </button>

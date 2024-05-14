@@ -1,4 +1,3 @@
-// ManageDevicesControl.tsx
 import React, { useEffect, useState } from "react"
 import Navbar from "./Navbar"
 import CurrentTime from "./CurrentTime"
@@ -14,11 +13,13 @@ import {
   IRoom,
 } from "@/lib/DataInterfaces"
 import AddDeviceForm from "../form/AddDeviceForm"
+import UpdateDeviceForm from "../form/UpdateDeviceForm"
 import {
   addDeviceToUser,
   deleteDeviceFromUser,
   getAllDevicesFromUser,
   getAllRoomsFromUser,
+  updateDeviceToUser, // Make sure you have this function implemented
 } from "@/lib/FirebaseCollection"
 import { auth } from "@/firebase"
 
@@ -27,16 +28,27 @@ const ManageDevicesControl = () => {
   const [roomColors, setRoomColors] = useState<{ [roomId: number]: string }>({})
   const [roomName, setRoomName] = useState<{ [roomId: number]: string }>({})
   const [isAddFormOpen, setIsAddFormOpen] = useState(false)
+  const [isUpdateFormOpen, setIsUpdateFormOpen] = useState(false)
+  const [currentDevice, setCurrentDevice] = useState<IDevice | null>(null)
   const userId = auth.currentUser?.uid ?? ""
+
+  useEffect(() => {
+    fetchData()
+  }, [userId])
 
   const sortDevicesByType = (devices: IDevice[]) => {
     return devices.sort((a, b) => a.type.localeCompare(b.type))
   }
 
+  const fetchData = async () => {
+    await fetchRooms()
+    await fetchDevices()
+  }
+
   const fetchRooms = async () => {
     const fetchedRooms = await getAllRoomsFromUser(userId)
-    const roomColor: { [roomId: number]: string } = {}
-    const roomNames: { [roomId: number]: string } = {}
+    const roomColor = {}
+    const roomNames = {}
     if (fetchedRooms) {
       fetchedRooms.forEach((room: IRoom) => {
         roomColor[room.roomId] = room.color
@@ -49,14 +61,8 @@ const ManageDevicesControl = () => {
 
   const fetchDevices = async () => {
     const fetchedDevices = await getAllDevicesFromUser(userId)
-    // Sort devices by type before setting them to state
     const sortedDevices = sortDevicesByType(fetchedDevices as IDevice[])
     setLocalDevices(sortedDevices)
-  }
-
-  const fetchData = async () => {
-    await fetchRooms()
-    await fetchDevices()
   }
 
   const handleDeleteDevice = async (deviceId: number) => {
@@ -66,46 +72,21 @@ const ManageDevicesControl = () => {
     )
   }
 
-  const getNextDeviceId = () => {
-    const maxDeviceId = localDevices.reduce(
-      (max, device) => Math.max(max, device.idDevice),
-      0
-    )
-    return maxDeviceId + 1
+  const handleAddDevice = async (deviceData: IDevice) => {
+    await addDeviceToUser(userId, Date.now(), deviceData)
+    fetchData() // Reload or refetch the device data
   }
 
-  const handleAddDevice = async (device: {
-    name: string
-    type: DeviceType
-    manufacturer: Manufacturer
-    cost: number
-    roomId: number
-    powerConsumption: number
-  }) => {
-    try {
-      const nextDeviceId = getNextDeviceId()
-      await addDeviceToUser(userId, nextDeviceId, {
-        name: device.name,
-        type: device.type,
-        idDevice: nextDeviceId,
-        roomId: device.roomId, // Replace with the appropriate room ID if applicable
-        manufacturer: device.manufacturer,
-        status: Status.OFF, // Default status for new devices
-        cost: device.cost,
-        preTimestamp: new Date() as any,
-        postTimestamp: new Date() as any,
-        powerConsumption: device.powerConsumption,
-        icon: getDeviceIcon(device.type),
-      })
-      fetchData() // Reload or refetch the device data
-    } catch (error) {
-      console.error("Error adding device:", error)
-    }
+  const handleUpdateDevice = async (deviceId: number, deviceData: IDevice) => {
+    await updateDeviceToUser(userId, deviceId, deviceData)
+    fetchData() // Reload or refetch the device data
+    setIsUpdateFormOpen(false) // Close the update form
   }
 
-  useEffect(() => {
-    fetchData()
-  }, [userId])
+  const openUpdateForm = (device: IDevice) => {
+    setCurrentDevice(device)
+    setIsUpdateFormOpen(true)
+  }
 
   const navigate = useNavigate()
   const navigateToSetting = () => {
@@ -115,13 +96,10 @@ const ManageDevicesControl = () => {
   return (
     <div>
       <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* Navbar */}
         <Navbar />
         <div className="flex items-center justify-end transform duration-500 hover:scale-105">
           <CurrentTime />
         </div>
-
-        {/* main */}
         <div className="bg-[#F0F0F0] sm:col-span-1 md:col-span-1 lg:col-span-2 rounded-xl grid md:grid-cols-2 lg:grid-cols-2 gap-5 p-5 dark:bg-[#66676d]">
           <div className="col-span-2">
             <div className="flex justify-between mb-5">
@@ -141,7 +119,6 @@ const ManageDevicesControl = () => {
               </button>
             </div>
           </div>
-          {/* Map Devices */}
           {localDevices.map((device) => {
             const deviceColor = roomColors[device.roomId] || "bg-white"
             return (
@@ -156,12 +133,12 @@ const ManageDevicesControl = () => {
                       className="lg:w-3/12 sm:w-2/12 md:w-3/12 lg:h-3/12 sm:h-1/12 md:h-3/12"
                       alt="Device"
                     />
-                    <h2 className="lg:text-2xl sm:text-md md:text-2xl font-bold ">
+                    <h2 className="lg:text-2xl sm:text-md md:text-2xl font-bold dark:text-slate-600 ">
                       {device.name}
                     </h2>
                   </div>
                   <div className="flex space-x-2">
-                    <button>
+                    <button onClick={() => openUpdateForm(device)}>
                       <img
                         src="/images/edit.png"
                         className="lg:w-10 sm:w-4 md:w-6 lg:h-10 sm:h-4 md:h-6"
@@ -177,8 +154,8 @@ const ManageDevicesControl = () => {
                     </button>
                   </div>
                 </div>
-                <hr className="border-t border-gray-300 mb-3" />
-                <ul>
+                <hr className="border-t border-gray-300 mb-3 " />
+                <ul className="dark:text-slate-500">
                   <li>Type: {device.type}</li>
                   <li>Cost: ${device.cost}</li>
                   <li>Manufacturer: {device.manufacturer}</li>
@@ -189,8 +166,6 @@ const ManageDevicesControl = () => {
               </div>
             )
           })}
-
-          {/* Add Device Button */}
           <div className="flex justify-center mt-5 sm:col-span-1 md:col-span-1 lg:col-span-2">
             <button
               className="flex items-center bg-blue-200 p-3 rounded-full text-blue-700 font-bold shadow-lg hover:scale-105 transition-transform"
@@ -205,6 +180,14 @@ const ManageDevicesControl = () => {
             setIsOpen={setIsAddFormOpen}
             submitForm={handleAddDevice}
           />
+          {currentDevice && (
+            <UpdateDeviceForm
+              isOpen={isUpdateFormOpen}
+              setIsOpen={setIsUpdateFormOpen}
+              initialDevice={currentDevice}
+              updateDevice={handleUpdateDevice}
+            />
+          )}
         </div>
       </div>
     </div>

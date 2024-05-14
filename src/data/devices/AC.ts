@@ -1,11 +1,5 @@
 import { Timestamp } from "@firebase/firestore"
-import {
-  DeviceType,
-  IDevice,
-  Manufacturer,
-  Status,
-  getDeviceIcon,
-} from "@/lib/DataInterfaces"
+import { DeviceType, IDevice, Manufacturer, Status } from "@/lib/DataInterfaces"
 
 export class AirCondition implements IDevice {
   name: string

@@ -1,35 +1,37 @@
-import Navbar from "./Navbar";
-import Statictics from "./StaticticsControl";
-import { BsThreeDots } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
-import WeatherComponent from "./WeatherComponent";
-import TodoList from "./TodoList";
-import CurrentTime from "./CurrentTime";
-import CustomPopup from "./CustomPopup";
-import { useState } from "react";
+import Navbar from "./Navbar"
+import { Card, CardBody, CardHeader } from "@material-tailwind/react"
+import { BsThreeDots } from "react-icons/bs"
+import { useNavigate } from "react-router-dom"
+import WeatherComponent from "./WeatherComponent"
+import TodoList from "./TodoList"
+import CurrentTime from "./CurrentTime"
+import CustomPopup from "./CustomPopup"
+import { useState } from "react"
+import { useData } from "@/lib/DataContext"
+import CustomChart from "./CustomChart"
 
 const HomeControl = () => {
-  const navigate = useNavigate();
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-
+  const navigate = useNavigate()
+  const [isPopupOpen, setIsPopupOpen] = useState(false)
+  const { fetchAllPages, chartData, chartOptions, chartSeries } = useData()
   const navigateToLivingRoom = () => {
-    navigate("/rooms/livingRoom");
-  };
+    navigate("/rooms/livingRoom")
+  }
   const navigateToBedRoom = () => {
-    navigate("/rooms/bedRoom");
-  };
+    navigate("/rooms/bedRoom")
+  }
   const navigateToBathRoom = () => {
-    navigate("/rooms/bathRoom");
-  };
+    navigate("/rooms/bathRoom")
+  }
   const navigateToKitchen = () => {
-    navigate("/rooms/kitchen");
-  };
+    navigate("/rooms/kitchen")
+  }
 
   // Handler for closing the popup
   const popupCloseHandler = () => {
-    setIsPopupOpen(false);
-  };
-  const handleOpenPopup = () => setIsPopupOpen(true);
+    setIsPopupOpen(false)
+  }
+  const handleOpenPopup = () => setIsPopupOpen(true)
 
   return (
     <>
@@ -90,7 +92,7 @@ const HomeControl = () => {
                 ></img>
 
                 <div className=" content-center">
-                  <p className="text-3xl text-center">150</p>
+                  <p className="text-3xl text-center">130</p>
                   <p className="text-center text-[#828282]">kWh</p>
                 </div>
               </div>
@@ -117,7 +119,7 @@ const HomeControl = () => {
                 ></img>
 
                 <div className=" content-center">
-                  <p className="text-3xl text-center">150</p>
+                  <p className="text-3xl text-center">80</p>
                   <p className="text-center text-[#828282]">kWh</p>
                 </div>
               </div>
@@ -144,7 +146,7 @@ const HomeControl = () => {
                 ></img>
 
                 <div className=" content-center">
-                  <p className="text-3xl text-center">150</p>
+                  <p className="text-3xl text-center">90</p>
                   <p className="text-center text-[#828282]">kWh</p>
                 </div>
               </div>
@@ -159,10 +161,21 @@ const HomeControl = () => {
               <TodoList onOpenPopup={handleOpenPopup} />
             </div>
           </div>
+          <div className=" col-span-4">
+            <Card placeholder="">
+              <CardHeader
+                placeholder=""
+                className="bg-blue-200 text-xl "
+              ></CardHeader>
+              <CardBody placeholder="">
+                <CustomChart
+                  chartOptions={chartOptions}
+                  chartSeries={chartSeries}
+                />
+              </CardBody>
+            </Card>
+          </div>
         </div>
-
-        {/* Statictics*/}
-        {/* <Statictics /> */}
 
         {/* Custom Popup for TodoList */}
         <CustomPopup
@@ -174,7 +187,7 @@ const HomeControl = () => {
         </CustomPopup>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default HomeControl;
+export default HomeControl

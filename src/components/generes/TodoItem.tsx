@@ -1,14 +1,13 @@
 import React, { useState } from "react"
-import { Task } from "../models/Task"
 import { RiDeleteBin5Fill } from "react-icons/ri"
-import { FaEdit } from "react-icons/fa"
-import { FaSave } from "react-icons/fa"
+import { FaEdit, FaSave } from "react-icons/fa"
+import { Task } from "@/lib/DataInterfaces"
 
 type TodoItemProps = {
   task: Task
-  deleteTask: (id: number) => void
-  toggleTask: (id: number) => void
-  editTask: (id: number, newText: string) => void
+  deleteTask: (id: string) => void // Updated to string
+  toggleTask: (id: string) => void // Updated to string
+  editTask: (newText: string) => void // Updated to string
 }
 
 const TodoItem: React.FC<TodoItemProps> = ({
@@ -22,25 +21,25 @@ const TodoItem: React.FC<TodoItemProps> = ({
 
   const handleEdit = () => {
     if (isEditing && editedText.trim() !== "") {
-      editTask(task.id, editedText.trim())
+      editTask(editedText.trim())
     }
     setIsEditing(!isEditing)
   }
 
   return (
-    <div className="flex items-center space-x-3 bg-white p-4 rounded-2xl shadow  dark:bg-[#1d1d1f]">
+    <div className="flex items-center space-x-3 bg-white p-4 rounded-2xl shadow dark:bg-[#1d1d1f]">
       <input
         type="checkbox"
         checked={task.completed}
         onChange={() => toggleTask(task.id)}
-        className="form-checkbox h-5 w-5 bg-gray-300"
+        className="form-checkbox h-5 w-5"
       />
       {isEditing ? (
         <input
           type="text"
           value={editedText}
           onChange={(e) => setEditedText(e.target.value)}
-          className="form-input flex-1  "
+          className="form-input flex-1"
         />
       ) : (
         <span
@@ -55,21 +54,16 @@ const TodoItem: React.FC<TodoItemProps> = ({
       {!task.completed && (
         <button
           onClick={handleEdit}
-          className="text-gray-600 hover:text-gray-900 text-icon-base md:text-icon-md lg:text-icon-lg"
+          className="text-gray-600 hover:text-gray-900"
         >
-          {isEditing ? (
-            <FaSave className="w-full h-full" />
-          ) : (
-            <FaEdit className="w-full h-full" />
-          )}{" "}
-          {/* Replace 'Save' with the MdEditDocument icon */}
+          {isEditing ? <FaSave /> : <FaEdit />}
         </button>
       )}
       <button
-        className="text-icon-base md:text-icon-md lg:text-icon-lg"
         onClick={() => deleteTask(task.id)}
+        className="text-gray-600 hover:text-gray-900"
       >
-        <RiDeleteBin5Fill className="w-full h-full" />
+        <RiDeleteBin5Fill />
       </button>
     </div>
   )

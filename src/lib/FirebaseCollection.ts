@@ -8,8 +8,9 @@ import {
   getDocs,
   collection,
   deleteDoc,
+  addDoc,
 } from "firebase/firestore"
-import { IDevice, IRoom, Status } from "./DataInterfaces"
+import { IDevice, IRoom, Status, Task } from "./DataInterfaces"
 import { devices, fams, rooms } from "@/data/data"
 
 /********************************************************* ADD *********************************************************/
@@ -125,7 +126,65 @@ export const addDeviceToUser = async (
   console.log(`Device ${deviceId} added to user ${userId} successfully.`)
 }
 
+// Updating the addTaskToFirestore to handle date correctly
+export const addTaskToFirestore = async (userId: string, task: Task) => {
+  const taskCollectionRef = collection(db, "users", userId, "tasks")
+  const docRef = await addDoc(taskCollectionRef, {
+    ...task,
+    createdAt: Timestamp.now(),
+  })
+  const docSnap = await getDoc(docRef) // Retrieve the document snapshot
+  return {
+    id: docRef.id,
+    ...task,
+    createdAt: docSnap.get("createdAt").toDate(), // Use get method to retrieve the createdAt field
+  }
+}
 /********************************************************* UPDATE *********************************************************/
+
+// Function to update device usage details (timestamps and duration)
+export const updateDeviceUsage = async (
+  userId: string,
+  deviceId: number,
+  status: Status
+) => {
+  const deviceDocRef = doc(db, "users", userId, "devices", `device_${deviceId}`)
+
+  // Fetch the current status and timestamps from Firestore
+  const docSnap = await getDoc(deviceDocRef)
+  if (!docSnap.exists()) {
+    throw new Error(`No device found with ID ${deviceId}`)
+  }
+
+  const deviceData = docSnap.data()
+  const currentStatus = deviceData.status
+
+  // Prepare updates based on the current and new status
+  if (status === Status.ON && currentStatus === Status.OFF) {
+    // Device is being turned ON: Set preTimestamp
+    await updateDoc(deviceDocRef, {
+      status: Status.ON,
+      preTimestamp: Timestamp.now(),
+    })
+    console.log(`Device ${deviceId} turned ON at ${Timestamp.now().toDate()}.`)
+  } else if (status === Status.OFF && currentStatus === Status.ON) {
+    // Device is being turned OFF: Calculate duration and set postTimestamp
+    const preTimestamp = deviceData.preTimestamp?.toDate()
+    const postTimestamp = new Date()
+    const duration = preTimestamp
+      ? (postTimestamp.getTime() - preTimestamp.getTime()) / 3600000
+      : 0 // Convert ms to hours
+
+    await updateDoc(deviceDocRef, {
+      status: Status.OFF,
+      postTimestamp: Timestamp.fromDate(postTimestamp),
+      usageDuration: duration,
+    })
+    console.log(
+      `Device ${deviceId} turned OFF. Usage duration: ${duration} hours recorded.`
+    )
+  }
+}
 
 // Function to update the status of a specific device in a user's 'devices' subcollection
 export const updateDeviceStatus = async (userId: string, deviceId: number) => {
@@ -168,6 +227,59 @@ export const updateRoomToUser = async (
     console.error("Error updating room:", error)
   }
 }
+
+export const updateDeviceToUser = async (
+  userId: string,
+  deviceId: number,
+  deviceData: Partial<IDevice> // Use Partial to allow updating any subset of IDevice properties
+) => {
+  try {
+    const deviceDocRef = doc(
+      db,
+      "users",
+      userId,
+      "devices",
+      `device_${deviceId}`
+    )
+
+    // If updating timestamps manually, ensure they are converted to Firestore Timestamp if not already
+    const updates = {
+      ...deviceData,
+      updatedTimestamp: Timestamp.now(), // Optionally set a last updated timestamp
+    }
+
+    if (deviceData.preTimestamp) {
+      updates.preTimestamp = Timestamp.fromDate(
+        new Date(deviceData.preTimestamp.toDate())
+      ) // Convert Date back to Timestamp if needed
+    }
+    if (deviceData.postTimestamp) {
+      updates.postTimestamp = Timestamp.fromDate(
+        new Date(deviceData.postTimestamp.toDate())
+      ) // Convert Date back to Timestamp if needed
+    }
+
+    await updateDoc(deviceDocRef, updates) // Perform the update
+    console.log(`Device ${deviceId} updated successfully for user ${userId}.`)
+  } catch (error) {
+    console.error("Error updating device:", error)
+  }
+}
+
+// Update Task
+export const updateTaskInFirestore = async (
+  userId: string,
+  taskId: string,
+  taskUpdate: Partial<Task>
+) => {
+  const taskDocRef = doc(db, "users", userId, "tasks", taskId)
+  await updateDoc(taskDocRef, {
+    ...taskUpdate,
+    updatedAt: Timestamp.now(),
+  })
+  console.log(`Task ${taskId} updated for user ${userId} successfully.`)
+}
+
 /********************************************************* READ *********************************************************/
 
 export const getAllDevicesFromUser = async (userId: string) => {
@@ -208,6 +320,14 @@ export const getAllRoomsFromUser = async (userId: string) => {
   }
 }
 
+// Fetch All Tasks for a User
+export const getAllTasksFromFirestore = async (userId: string) => {
+  const taskCollectionRef = collection(db, "users", userId, "tasks")
+  const snapshot = await getDocs(taskCollectionRef)
+  const tasks = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+  console.log(`Tasks retrieved for user ${userId}.`)
+  return tasks
+}
 /********************************************************* DELETE *********************************************************/
 export const deleteDeviceFromUser = async (
   userId: string,
@@ -257,4 +377,27 @@ export const deleteRoomFromUser = async (userId: string, roomId: number) => {
   } catch (error) {
     console.error("Error deleting room: ", error)
   }
+}
+
+// Delete Task
+export const deleteTaskFromFirestore = async (
+  userId: string,
+  taskId: string
+) => {
+  const taskDocRef = doc(db, "users", userId, "tasks", taskId)
+  await deleteDoc(taskDocRef)
+  console.log(`Task ${taskId} deleted for user ${userId} successfully.`)
+}
+
+// Calculate total household cost
+export const calculateHouseholdCost = async (userId: string) => {
+  const roomsRef = collection(db, "users", userId, "rooms")
+  const snapshot = await getDocs(roomsRef)
+  const totalCost = snapshot.docs.reduce((total, doc) => {
+    const weeklyCosts = doc.data().weeklyCosts || []
+    return total + weeklyCosts.reduce((sum, cost) => sum + cost, 0)
+  }, 0)
+
+  console.log(`Total household cost: ${totalCost}`)
+  return totalCost
 }

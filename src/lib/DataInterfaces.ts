@@ -110,6 +110,7 @@ export interface IRoom {
   icon: string
   color: string
   type: RoomType
+  weeklyCosts?: number[]
 }
 
 export interface IFamilyMember {
@@ -118,4 +119,13 @@ export interface IFamilyMember {
   age: number
   relationship: Relationship
   avatarUrl?: string // Optional property for a profile picture
+  birthday?: Timestamp // Added birthday property as a Date type
+}
+
+export interface Task {
+  id?: string // Optional because Firestore generates the ID when the task is created
+  text: string // Description of the task
+  completed: boolean // Status to track if the task is done or not
+  createdAt?: Timestamp // Automatically set when the task is created
+  updatedAt?: Timestamp // Automatically set when the task is updated
 }
