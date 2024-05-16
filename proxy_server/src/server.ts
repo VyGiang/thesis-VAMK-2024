@@ -23,6 +23,7 @@ app.get("/api/datasets/317/data", async (req, res) => {
         locale: "en",
         sortBy: "startTime",
         sortOrder: "asc",
+        pageSize: "10000",
         page,
       },
       headers: {
@@ -34,7 +35,7 @@ app.get("/api/datasets/317/data", async (req, res) => {
     res.json(response.data)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: "Internal server error" })
+    res.status((error as any).response.status).json({ message: error })
   }
 })
 

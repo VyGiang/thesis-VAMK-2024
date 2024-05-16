@@ -59,22 +59,16 @@ export const DataProvider = ({ children }) => {
   const [chartSeries, setChartSeries] = useState([])
 
   const fetchAllPages = async (startTime, endTime) => {
-    let currentPage = 1
     const allFetchedData = []
     const url = `http://localhost:5000/api/datasets/317/data`
-    let response
 
-    do {
-      response = await axios.get(url, {
-        params: {
-          startTime,
-          endTime,
-          page: currentPage,
-        },
-      })
-      allFetchedData.push(...response.data.data)
-      currentPage += 1
-    } while (response.data.data.length) // Adjust perPage condition as needed
+    const response = await axios.get(url, {
+      params: {
+        startTime,
+        endTime,
+      },
+    })
+    allFetchedData.push(...response.data.data)
 
     setChartData(allFetchedData)
     updateChartSeries(allFetchedData)
